@@ -1,0 +1,40 @@
+1.2.2
+- Anzahl der Testklassen: 17
+
+	AssertTest.java
+	AusleiheMedienFormatiererComparatorTest.java
+	AusleiheMedienTableModelTest.java
+	CDTest.java
+	DatumTest.java
+	DVDTest.java
+	GeldbetragTest.java
+	KundenComparatorTest.java
+	KundennummerTest.java
+	KundenstammServiceImplTest.java
+	KundenTableModelTest.java
+	KundeTest.java
+	MedienbestandServiceImplTest.java
+	MedienComparatorTest.java
+	PLZTest.java
+	VerleihkarteTest.java
+	VerleihServiceImplTest.java
+
+- Erkennung GUI-Klassen: "*UI.java"
+
+- Dienstleistungen der Klasse VerleihService:
+
+	VerleihService.verleiheAn(Kunde, List<Medium>, Datum)
+	VerleihService.istVerleihenMoeglich(Kunde, List<Medium>)
+	VerleihService.getEntleiherFuer(Medium)
+	VerleihService.getAusgelieheneMedienFuer(Kunde)
+	VerleihService.getVerleihkarten()
+	VerleihService.nimmZurueck(List<Medium>, Datum)
+	VerleihService.istVerliehen(Medium)
+	VerleihService.sindAlleNichtVerliehen(List<Medium>)
+	VerleihService.sindAlleVerliehen(List<Medium>)
+	VerleihService.kundeImBestand(Kunde)
+	VerleihService.mediumImBestand(Medium)
+	VerleihService.medienImBestand(List<Medium>)
+	VerleihService.getVerleihkartenFuer(Kunde)
+	VerleihService.getVerleihkarteFuer(Medium)
+	

@@ -148,3 +148,5 @@ local.properties
 # Custom
 .idea/
 !**.gitkeep
+
+RemoteSystemsTempFiles/

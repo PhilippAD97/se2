@@ -37,4 +37,12 @@
 	VerleihService.medienImBestand(List<Medium>)
 	VerleihService.getVerleihkartenFuer(Kunde)
 	VerleihService.getVerleihkarteFuer(Medium)
-	
+
+
+1.3.1
+- Es handelt sich um eine Dummy-Implementation um die GUI zu testen
+- Implementiert das Interface (bis auf die Schnittstellenkommentare) formal korrekt
+
+1.3.2
+- Weil VerleihServiceImpl ebenfalls das Interface Verleihservice implementiert
+

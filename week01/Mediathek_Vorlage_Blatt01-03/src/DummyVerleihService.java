@@ -29,6 +29,9 @@ class DummyVerleihService extends AbstractObservableService
     {
     }
 
+    /**
+     * Liefert eine Liste mit einem konstanten Eintrag zurück anstelle aller ausgeliehender Medien für einen Kunden
+     */
     @Override
     public List<Medium> getAusgelieheneMedienFuer(Kunde kunde)
     {
@@ -37,18 +40,27 @@ class DummyVerleihService extends AbstractObservableService
         return ergebnisListe;
     }
 
+    /**
+     * Gibt konstanten Kunden zurück
+     */
     @Override
     public Kunde getEntleiherFuer(Medium medium)
     {
         return ENTLEIHER;
     }
 
+    /**
+     * Gibt konstante Verleihkarte zurück
+     */
     @Override
     public Verleihkarte getVerleihkarteFuer(Medium medium)
     {
         return VERLEIHKARTE;
     }
 
+    /**
+     * Liefert eine Liste mit einem konstanten Eintrag zurück anstelle der Liste aller Verleihkarten
+     */
     @Override
     public List<Verleihkarte> getVerleihkarten()
     {
@@ -57,46 +69,70 @@ class DummyVerleihService extends AbstractObservableService
         return ergebnisListe;
     }
 
+    /**
+     * Gibt einen Zufallsboolean zurück
+     */
     @Override
     public boolean istVerliehen(Medium medium)
     {
         return RANDOM.nextBoolean();
     }
 
+    /**
+     * Hat keine Funktion
+     */
     @Override
     public void nimmZurueck(List<Medium> medien, Datum rueckgabeDatum)
     {
     }
 
+    /**
+     * Gibt einen Zufallsboolean zurück
+     */
     @Override
     public boolean sindAlleNichtVerliehen(List<Medium> medien)
     {
         return RANDOM.nextBoolean();
     }
 
+    /**
+     * Gibt einen Zufallsboolean zurück
+     */
     @Override
     public boolean sindAlleVerliehen(List<Medium> medien)
     {
         return RANDOM.nextBoolean();
     }
 
+    /**
+     * Hat keine Funktion
+     */
     @Override
     public void verleiheAn(Kunde kunde, List<Medium> medien, Datum ausleihDatum)
     {
     }
 
+    /**
+     * Prüft nicht gegen Kundenstamm sondern gegen konstanten Kunden
+     */
     @Override
     public boolean kundeImBestand(Kunde kunde)
     {
         return ENTLEIHER.equals(kunde);
     }
 
+    /**
+     * Prüft nicht gegen Medienbestand sondern gegen konstantes Medium
+     */
     @Override
     public boolean mediumImBestand(Medium medium)
     {
         return MEDIUM.equals(medium);
     }
 
+    /**
+     * Prüft Medien aus Liste gegen konstantes Medium und nicht gegen Bestandsliste ab
+     */
     @Override
     public boolean medienImBestand(List<Medium> medien)
     {
@@ -112,6 +148,9 @@ class DummyVerleihService extends AbstractObservableService
         return result;
     }
 
+    /**
+     * Liefert eine Liste mit einem konstanten Eintrag zurück anstelle der Verleihkarten für einen Kunden
+     */
     @Override
     public List<Verleihkarte> getVerleihkartenFuer(Kunde kunde)
     {
@@ -119,7 +158,10 @@ class DummyVerleihService extends AbstractObservableService
         result.add(VERLEIHKARTE);
         return result;
     }
-
+    
+    /**
+     * Returned immer false anstelle tatsächlichem Ergebnis
+     */
     @Override
     public boolean istVerleihenMoeglich(Kunde kunde, List<Medium> medien)
     {

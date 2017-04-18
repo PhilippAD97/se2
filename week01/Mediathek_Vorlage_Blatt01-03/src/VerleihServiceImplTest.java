@@ -3,6 +3,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 //Die in den Testfällen verwendeten assert-Anweisungen werden über
@@ -53,18 +54,31 @@ public class VerleihServiceImplTest
     @Test
     public void testAmAnfangIstNichtsVerliehen()
     {
-        assertTrue(_verleihService
-            .sindAlleNichtVerliehen(_medienbestand.getMedien()));
+        assertTrue(_verleihService.sindAlleNichtVerliehen(_medienbestand.getMedien()));
         for (Kunde kunde : _kundenstamm.getKunden())
         {
-            assertTrue(_verleihService.istVerleihenMoeglich(kunde,
-                    _medienbestand.getMedien()));
+            assertTrue(_verleihService.istVerleihenMoeglich(kunde, _medienbestand.getMedien()));
         }
     }
 
     @Test
-    public void testNochEinTestFall1()
+    public void testVerleiheAnLegtKartenAn()
     {
+        Kunde marge = new Kunde(new Kundennummer(123459), "Marge", "Bouvier");
+        _abbey = new CD("Abbey Road", "Meisterwerk", "Beatles", 44);
+        _bad = new CD("Bad", "not as bad as the title might suggest",
+                "Michael Jackson", 48);
+        _shape = new CD("The Colour And The Shape", "bestes Album der Gruppe",
+                "Foo Fighters", 46);
+
+        List<Medium> _medien = new ArrayList<Medium>();
+        _medien.add(_abbey);
+        _medien.add(_bad);
+        _medien.add(_shape);
+
+        _verleihService.verleiheAn(marge, _medien, Datum.heute());
+
+        assertTrue(_verleihService.getVerleihkarten().size() == 3);
     }
 
     @Test

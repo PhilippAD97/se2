@@ -3,7 +3,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 //Die in den Testfällen verwendeten assert-Anweisungen werden über
@@ -86,8 +85,10 @@ public class VerleihServiceImplTest
     }
 
     @Test
-    public void testNochEinTestFall2()
+    public void testMediumImBestand()
     {
+        _medienbestand.fuegeMediumEin(_abbey);
+        assertTrue(_verleihService.mediumImBestand(_abbey));
     }
 
     @Test

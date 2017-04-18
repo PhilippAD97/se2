@@ -1,0 +1,10 @@
+2.1.2
+- Im Schnittstellenkommentar werden Vor- und Nachbedingungen deklariert. Zusätzlich finden
+Überprüfungen der Vorbedinungen im Konstruktor statt.
+- Syntax:
+	Vorbedinungen:
+		@require boolean expression
+		Prüfen mit <assert> <boolean expression> [: <message>];
+	Nachbedinungen:
+		@ensure boolean expression
+

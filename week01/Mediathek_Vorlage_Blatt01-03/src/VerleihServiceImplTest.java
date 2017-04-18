@@ -76,9 +76,13 @@ public class VerleihServiceImplTest
         _medien.add(_bad);
         _medien.add(_shape);
 
+        int sizeBeforeTest = _verleihService.getVerleihkarten().size();
+
         _verleihService.verleiheAn(marge, _medien, Datum.heute());
 
-        assertTrue(_verleihService.getVerleihkarten().size() == 3);
+        int delta = _verleihService.getVerleihkarten().size() - sizeBeforeTest;
+
+        assertTrue(delta == 3);
     }
 
     @Test

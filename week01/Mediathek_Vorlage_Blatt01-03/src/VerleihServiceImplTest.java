@@ -73,7 +73,6 @@ public class VerleihServiceImplTest
         _verleihService.verleiheAn(_homer, _medien, Datum.heute());
 
         int delta = _verleihService.getVerleihkarten().size() - sizeBeforeTest;
-        System.out.println(delta);
 
         assertTrue(delta == 3);
     }

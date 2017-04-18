@@ -64,13 +64,6 @@ public class VerleihServiceImplTest
     @Test
     public void testVerleiheAnLegtKartenAn()
     {
-        Kunde marge = new Kunde(new Kundennummer(123459), "Marge", "Bouvier");
-        _abbey = new CD("Abbey Road", "Meisterwerk", "Beatles", 44);
-        _bad = new CD("Bad", "not as bad as the title might suggest",
-                "Michael Jackson", 48);
-        _shape = new CD("The Colour And The Shape", "bestes Album der Gruppe",
-                "Foo Fighters", 46);
-
         List<Medium> _medien = new ArrayList<Medium>();
         _medien.add(_abbey);
         _medien.add(_bad);
@@ -78,9 +71,10 @@ public class VerleihServiceImplTest
 
         int sizeBeforeTest = _verleihService.getVerleihkarten().size();
 
-        _verleihService.verleiheAn(marge, _medien, Datum.heute());
+        _verleihService.verleiheAn(_homer, _medien, Datum.heute());
 
         int delta = _verleihService.getVerleihkarten().size() - sizeBeforeTest;
+        System.out.println(delta);
 
         assertTrue(delta == 3);
     }

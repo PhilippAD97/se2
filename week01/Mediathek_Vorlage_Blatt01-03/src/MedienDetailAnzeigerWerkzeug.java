@@ -33,8 +33,48 @@ class MedienDetailAnzeigerWerkzeug
     {
         assert medien != null : "Vorbedingung verletzt: (medien != null)";
         JTextArea selectedMedienTextArea = _ui.getMedienAnzeigerTextArea();
-        // TODO Aufgabe 3.4.2 Die Mediendetails sollen angezeigt werden
-        selectedMedienTextArea.setText("");
+        
+        String outputText = "";
+        for (Medium medium : medien)
+        {
+//        	outputText += medium.getMedienBezeichnung();
+//        	outputText += "\n" + medium.getTitel();
+//        	outputText += "\n" + medium.getKommentar();
+//        	
+//        	switch(medium.getMedienBezeichnung())
+//        	{
+//        		case "DVD":
+//        			if (medium instanceof DVD)
+//        			{
+//        				DVD dvd = (DVD) medium;
+//        				outputText += "\nLaufzeit: " + dvd.getLaufzeit() + " min";
+//        				outputText += "\n" + dvd.getRegisseur();
+//        			}
+//        			break;
+//        		case "CD":
+//        			if (medium instanceof CD)
+//        			{
+//        				CD cd = (CD) medium;
+//        				outputText += "\nSpiellänge: " + cd.getSpiellaenge() + " min";
+//        				outputText += "\n" + cd.getInterpret();
+//        			}
+//        			break;
+//        		case "Videospiel":
+//        			if (medium instanceof Videospiel)
+//        			{
+//        				Videospiel game = (Videospiel) medium;
+//        				outputText += "\nPlattform: " + game.getPlatform();
+//        			}
+//        			break;
+//    			default:
+//    				break;
+//        	}
+//        	outputText += "\n\n";
+        	
+        	outputText += medium.getFormatiertenString() + "\n\n";
+        }
+        
+        selectedMedienTextArea.setText(outputText);
     }
 
     /**

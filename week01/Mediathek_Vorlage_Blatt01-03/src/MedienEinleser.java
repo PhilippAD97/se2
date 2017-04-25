@@ -220,7 +220,8 @@ class MedienEinleser
 
             medium = new Videospiel(titel, kommentar, system); // Dynamischer Typ Videospiel
         }
-        return medium;
+        
+        return medium; // Dynamische Typ DVD | CD | Videospiel | null
     }
 
     /**

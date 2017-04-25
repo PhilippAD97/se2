@@ -5,7 +5,8 @@
  * @version 0.1.0
  *
  */
-public class Videospiel implements Medium {
+public class Videospiel implements Medium
+{
 	/**
      * Ein Kommentar zum Medium
      */
@@ -35,7 +36,8 @@ public class Videospiel implements Medium {
      * @ensure getKommentar() == kommentar
      * @ensure getPlatform() == platform
 	 */
-	public Videospiel(String titel, String kommentar, String platform) {
+	public Videospiel(String titel, String kommentar, String platform)
+	{
 		 assert titel != null : "Vorbedingung verletzt: titel != null";
 	     assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
 	     assert platform != null : "Vorbedingung verletzt: platform != null";
@@ -46,21 +48,29 @@ public class Videospiel implements Medium {
 	}
 
 	@Override
-	public String getKommentar() {
+	public String getKommentar()
+	{
 		return _kommentar;
 	}
 
 	@Override
-	public String getMedienBezeichnung() {
+	public String getMedienBezeichnung()
+	{
 		return "Videospiel";
 	}
 
 	@Override
-	public String getTitel() {
+	public String getTitel() 
+	{
 		return _titel;
 	}
 
-	public String getPlatform() {
+	/**
+	 * Gibt den Plattformbezeichner zurück
+	 * @return Platform Bezeichner
+	 */
+	public String getPlatform()
+	{
 		return _platform;
 	}
 	

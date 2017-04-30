@@ -6,7 +6,7 @@
  * @version SoSe 2017
  * 
  */
-class DVD implements Medium
+class DVD extends AbstractMedium
 {
     /**
      * Die Laufzeit des Hauptteils der DVD (in Minuten).
@@ -17,17 +17,6 @@ class DVD implements Medium
      * Der Regisseur des Inhalts der DVD.
      */
     private String _regisseur;
-
-    /**
-     * Ein Kommentar zum Medium
-     */
-    private String _kommentar;
-
-    /**
-     * Der Titel des Mediums
-     * 
-     */
-    private String _titel;
 
     /**
      * Initialisiert eine neue DVD mit den gegebenen Daten.
@@ -117,32 +106,6 @@ class DVD implements Medium
     {
         assert regisseur != null : "Vorbedingung verletzt: regisseur != null";
         _regisseur = regisseur;
-    }
-
-    @Override
-    public String getKommentar()
-    {
-        return _kommentar;
-    }
-
-    @Override
-    public void setKommentar(String kommentar)
-    {
-        assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
-        _kommentar = kommentar;
-    }
-
-    @Override
-    public String getTitel()
-    {
-        return _titel;
-    }
-
-    @Override
-    public void setTitel(String titel)
-    {
-        assert titel != null : "Vorbedingung verletzt: titel != null";
-        _titel = titel;
     }
 
     @Override

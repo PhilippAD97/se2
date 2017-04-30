@@ -5,7 +5,7 @@
  * @author SE2-Team
  * @version SoSe 2017
  */
-class CD implements Medium
+class CD extends AbstractMedium
 {
     /**
      * Der Interpret der CD
@@ -16,17 +16,6 @@ class CD implements Medium
      * Die Spiellänge der CD in Minuten
      */
     private int _spiellaenge;
-
-    /**
-     * Ein Kommentar zum Medium
-     */
-    private String _kommentar;
-
-    /**
-     * Der Titel des Mediums
-     * 
-     */
-    private String _titel;
 
     /**
      * Initialisiert ein neues Exemplar.
@@ -114,32 +103,6 @@ class CD implements Medium
     {
         assert spiellaenge > 0 : "Vorbedingung verletzt: spiellaenge > 0";
         _spiellaenge = spiellaenge;
-    }
-
-    @Override
-    public String getKommentar()
-    {
-        return _kommentar;
-    }
-
-    @Override
-    public void setKommentar(String kommentar)
-    {
-        assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
-        _kommentar = kommentar;
-    }
-
-    @Override
-    public String getTitel()
-    {
-        return _titel;
-    }
-
-    @Override
-    public void setTitel(String titel)
-    {
-        assert titel != null : "Vorbedingung verletzt: titel != null";
-        _titel = titel;
     }
 
     @Override

@@ -58,8 +58,8 @@ class Videospiel extends AbstractMedium
     @Override
     public String getFormatiertenString()
     {
-        return getMedienBezeichnung() + ":\n" + "    " + "Titel: " + _titel
-                + "\n" + "    " + "Kommentar: " + _kommentar + "\n" + "    "
-                + "System: " + _system + "\n";
+        return getMedienBezeichnung() + ":\n"
+                + super.getFormatiertenString()
+                + "    " + "System: " + _system + "\n";
     }
 }

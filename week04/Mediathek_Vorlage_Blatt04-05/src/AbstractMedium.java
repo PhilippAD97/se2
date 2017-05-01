@@ -43,4 +43,11 @@ abstract class AbstractMedium implements Medium
         assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
         _kommentar = kommentar;
     }
+
+    @Override
+    public Geldbetrag berechneMietgebuehr(int mietTage)
+    {
+        assert mietTage > 0 : "Vorbedinung verletzt: mietTage > 0";
+        return new Geldbetrag(300 * mietTage);
+    }
 }

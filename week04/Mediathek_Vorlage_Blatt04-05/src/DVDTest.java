@@ -77,4 +77,11 @@ public class DVDTest
         return new DVD(TITEL, KOMMENTAR, REGISSEUR, LAENGE);
     }
 
+    @Test
+    public void testMietgebuehrberechnung()
+    {
+        Medium medium = getMedium();
+        assertEquals(medium.berechneMietgebuehr(1), new Geldbetrag(300));
+    }
+
 }

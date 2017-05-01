@@ -55,4 +55,11 @@ public class VideospielTest
         assertEquals(medium.getTitel(), "Titel2");
     }
 
+    @Test
+    public void testMietgebuehrberechnung()
+    {
+        Medium medium = getMedium();
+        assertEquals(medium.berechneMietgebuehr(2), new Geldbetrag(200));
+    }
+
 }

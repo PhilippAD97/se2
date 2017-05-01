@@ -90,4 +90,11 @@ public class CDTest
         return new CD(TITEL, KOMMENTAR, INTERPRET, LAENGE);
     }
 
+    @Test
+    public void testMietgebuehrberechnung()
+    {
+        Medium medium = getMedium();
+        assertEquals(medium.berechneMietgebuehr(1), new Geldbetrag(300));
+    }
+
 }

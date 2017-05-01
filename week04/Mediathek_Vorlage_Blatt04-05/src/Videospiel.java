@@ -62,4 +62,11 @@ class Videospiel extends AbstractMedium
                 + super.getFormatiertenString()
                 + "    " + "System: " + _system + "\n";
     }
+
+    @Override
+    public Geldbetrag berechneMietgebuehr(int mietTage)
+    {
+        assert mietTage > 0 : "Vorbedinung verletzt: mietTage > 0";
+        return new Geldbetrag(200);
+    }
 }

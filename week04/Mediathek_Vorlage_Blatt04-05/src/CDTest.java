@@ -93,8 +93,7 @@ public class CDTest
     @Test
     public void testMietgebuehrberechnung()
     {
-        Medium medium = getMedium();
-        assertEquals(medium.berechneMietgebuehr(1), new Geldbetrag(300));
+        assertEquals(_cd1.berechneMietgebuehr(1), new Geldbetrag(300));
     }
 
 }

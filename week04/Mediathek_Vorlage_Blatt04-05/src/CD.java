@@ -25,8 +25,6 @@ class CD extends AbstractMedium
      * @param interpret Der Interpret der CD
      * @param spiellaenge Die Spiellaenge der CD in Minuten
      * 
-     * @require titel != null
-     * @require kommentar != null
      * @require interpret != null
      * @require spiellaenge > 0
      * 
@@ -37,12 +35,11 @@ class CD extends AbstractMedium
      */
     public CD(String titel, String kommentar, String interpret, int spiellaenge)
     {
-        assert titel != null : "Vorbedingung verletzt: titel != null";
-        assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
+    	super(titel, kommentar);
+    	
         assert interpret != null : "Vorbedingung verletzt: interpret != null";
         assert spiellaenge > 0 : "Vorbedingung verletzt: spiellaenge > 0";
-        _titel = titel;
-        _kommentar = kommentar;
+        
         _spiellaenge = spiellaenge;
         _interpret = interpret;
     }

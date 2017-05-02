@@ -22,11 +22,11 @@ class MedienEinleser
 
     // Dieses Pattern dient der Überprüfung eines Datums
     private static final Pattern DATUM_PATTERN = Pattern
-            .compile("([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{4})");
+        .compile("([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{4})");
 
     // Dieses pattern dient der Überprüfung einer kundennumer
     private static final Pattern KUNDENNUMEER_PATTERN = Pattern
-            .compile("([0-9]{6})");
+        .compile("([0-9]{6})");
 
     private static String LEERSTRING = "";
 
@@ -133,8 +133,10 @@ class MedienEinleser
             {
                 StringTokenizer tokenizer = new StringTokenizer(line, ";");
 
-                Datum ausleihDatum = ermittleAusleihdatum(naechsterToken(tokenizer));
-                Kundennummer kundennummer = ermittleKundennummer(naechsterToken(tokenizer));
+                Datum ausleihDatum = ermittleAusleihdatum(
+                        naechsterToken(tokenizer));
+                Kundennummer kundennummer = ermittleKundennummer(
+                        naechsterToken(tokenizer));
 
                 Medium medium = leseMediumEin(tokenizer);
                 Verleihkarte verleihkarte = null;
@@ -214,28 +216,28 @@ class MedienEinleser
         }
         // TODO für Aufgabe 4.3.4: Kommentarzeichen entfernen um PC- und
         // Konsolenvideospiele in der Mediathek zu haben.
-        // else if (medienBezeichnung.equals("KonsolenVideospiel")
-        // || medienBezeichnung.equals("PCVideospiel"))
-        // {
-        // String system = naechsterToken(tokenizer);
-        //
-        // if (medienBezeichnung.equals("KonsolenVideospiel"))
-        // {
-        // medium = new KonsolenVideospiel(titel, kommentar, system);
-        // }
-        // else if (medienBezeichnung.equals("PCVideospiel"))
-        // {
-        // medium = new PCVideospiel(titel, kommentar, system);
-        // }
-        // }
-        // TODO für Aufgabe 4.3.4: Diesen else-Zweig auskommentieren, sobald PC-
-        // und Konsolenvideospiele existieren.
-        else if (medienBezeichnung.equals("Videospiel"))
+        else if (medienBezeichnung.equals("KonsolenVideospiel")
+                || medienBezeichnung.equals("PCVideospiel"))
         {
             String system = naechsterToken(tokenizer);
 
-            medium = new Videospiel(titel, kommentar, system);
+            if (medienBezeichnung.equals("KonsolenVideospiel"))
+            {
+                medium = new KonsolenVideospiel(titel, kommentar, system);
+            }
+            else if (medienBezeichnung.equals("PCVideospiel"))
+            {
+                medium = new PCVideospiel(titel, kommentar, system);
+            }
         }
+        // TODO für Aufgabe 4.3.4: Diesen else-Zweig auskommentieren, sobald PC-
+        // und Konsolenvideospiele existieren.
+        //        else if (medienBezeichnung.equals("Videospiel"))
+        //        {
+        //            String system = naechsterToken(tokenizer);
+        //
+        //            medium = new Videospiel(titel, kommentar, system);
+        //        }
         return medium;
     }
 

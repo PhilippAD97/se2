@@ -5,12 +5,13 @@
  * @author SE2-Team
  * @version SoSe 2012
  */
-class Videospiel extends AbstractMedium
+abstract class AbstractVideospiel extends AbstractMedium
 {
     /**
      * Das System, auf dem das Spiel lauffähig ist
      */
-    private String _system;
+    protected String _system;
+    protected final int _BASEPRICE = 200;
 
     /**
      * Initialisiert ein neues Videospiel.
@@ -19,29 +20,23 @@ class Videospiel extends AbstractMedium
      * @param kommentar Ein Kommentar zum Spiel
      * @param system Die Bezeichnung des System
      * 
-     * @require titel != null
-     * @require kommentar != null
      * @require system != null
      * 
      * @ensure getTitel() == titel
      * @ensure getKommentar() == kommentar
      * @ensure getSystem() == system
      */
-    public Videospiel(String titel, String kommentar, String system)
+    public AbstractVideospiel(String titel, String kommentar, String system)
     {
-        assert titel != null : "Vorbedingung verletzt: titel != null";
-        assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
+        super(titel, kommentar);
+
         assert system != null : "Vorbedingung verletzt: system != null";
-        _titel = titel;
-        _kommentar = kommentar;
+
         _system = system;
     }
 
     @Override
-    public String getMedienBezeichnung()
-    {
-        return "Videospiel";
-    }
+    abstract public String getMedienBezeichnung();
 
     /**
      * Gibt das System zurück, auf dem das Spiel lauffähig ist.
@@ -58,8 +53,7 @@ class Videospiel extends AbstractMedium
     @Override
     public String getFormatiertenString()
     {
-        return getMedienBezeichnung() + ":\n"
-                + super.getFormatiertenString()
+        return getMedienBezeichnung() + ":\n" + super.getFormatiertenString()
                 + "    " + "System: " + _system + "\n";
     }
 
@@ -67,6 +61,13 @@ class Videospiel extends AbstractMedium
     public Geldbetrag berechneMietgebuehr(int mietTage)
     {
         assert mietTage > 0 : "Vorbedinung verletzt: mietTage > 0";
-        return new Geldbetrag(200);
+        return new Geldbetrag(_BASEPRICE + getPreisNachTagen(mietTage));
     }
+
+    /**
+     * 
+     * @param mietTage
+     * @return
+     */
+    abstract int getPreisNachTagen(int mietTage);
 }

@@ -21,13 +21,9 @@ class DVD extends AbstractMedium
     /**
      * Initialisiert eine neue DVD mit den gegebenen Daten.
      * 
-     * @param titel Der Titel der DVD.
-     * @param kommentar Ein Kommentar zu der DVD.
      * @param regisseur Der Regisseur des Inhalts der DVD.
      * @param laufzeit Die Laufzeit des Hauptteils der DVD in Minuten.
      * 
-     * @require titel != null
-     * @require kommentar != null
      * @require regisseur != null
      * @require laufzeit > 0
      * 
@@ -38,12 +34,11 @@ class DVD extends AbstractMedium
      */
     public DVD(String titel, String kommentar, String regisseur, int laufzeit)
     {
-        assert titel != null : "Vorbedingung verletzt: titel != null";
-        assert kommentar != null : "Vorbedingung verletzt: kommentar != null";
+    	super(titel, kommentar);
+  
         assert laufzeit > 0 : "Vorbedingung verletzt: laufzeit > 0";
         assert regisseur != null : "Vorbedingung verletzt: regisseur != null";
-        _titel = titel;
-        _kommentar = kommentar;
+        
         _regisseur = regisseur;
         _laufzeit = laufzeit;
     }

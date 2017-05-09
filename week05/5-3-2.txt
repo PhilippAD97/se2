@@ -1,0 +1,1 @@
+Die meisten Klassen haben keinen Zugriffsmodifikator, also den "default"-Modifikator. Somit sind sie nur innerhalb des Pakets zugreifbar. Dieses Problem lässt sich umgehen, indem man diese Klassen als "public" deklariert.

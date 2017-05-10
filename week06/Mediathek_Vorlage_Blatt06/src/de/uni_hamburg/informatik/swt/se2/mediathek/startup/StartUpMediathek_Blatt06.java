@@ -16,7 +16,7 @@ import de.uni_hamburg.informatik.swt.se2.mediathek.werkzeuge.hauptwerkzeug.Media
 
 /**
  * Startet die Hauptanwendung mit grafischer Oberfläche.
- * 
+ *
  * @author SE2-Team
  * @version SoSe 2017
  */

@@ -150,4 +150,4 @@ local.properties
 !**.gitkeep
 
 RemoteSystemsTempFiles/
-protokoll.txt
+/**/verleihProtokoll.txt

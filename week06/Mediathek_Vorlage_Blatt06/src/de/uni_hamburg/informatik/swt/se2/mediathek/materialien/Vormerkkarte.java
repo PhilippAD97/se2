@@ -69,6 +69,11 @@ public class Vormerkkarte
         return _vormerkerListe.get(0);
     }
     
+    public List<Kunde> gibAlleVormerkungen()
+    {
+        return _vormerkerListe;
+    }
+    
     /**
      * Entfernt den ersten Vormerker aus der Liste
      */
@@ -95,6 +100,7 @@ public class Vormerkkarte
         return (!hatKundeVorgemerkt(kunde) && _vormerkerListe.size() < MAX_VORMERKER);
     }
     
+    // TODO Auslagern in den Verleihservice
     public boolean hatKundeVorgemerkt(Kunde kunde)
     {
         for (int i = 0; i < _vormerkerListe.size(); i++)
@@ -109,6 +115,11 @@ public class Vormerkkarte
         return false;
     }
     
+    /**
+     * Gibt das Medium für diese Vormerkkarte zurück
+     * 
+     * @return      Ein Medium
+     */
     public Medium getMedium() {
         return _medium;
     }

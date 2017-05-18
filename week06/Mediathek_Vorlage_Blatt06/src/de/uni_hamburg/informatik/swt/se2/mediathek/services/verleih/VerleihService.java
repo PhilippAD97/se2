@@ -5,6 +5,7 @@ import java.util.List;
 import de.uni_hamburg.informatik.swt.se2.mediathek.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Verleihkarte;
+import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Vormerkkarte;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.ObservableService;
 
@@ -235,7 +236,33 @@ public interface VerleihService extends ObservableService
      * @param kunde     Der Kunde
      * @param medium    Liste an Medien
      * @return          Ob vormerken möglich ist
+     * 
+     * @require kunde != null
+     * @require medien != null
      */
-    boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medium);
+    boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien);
+    
+    /**
+     * Merkt für einen Kunden eine Liste an Medien vor
+     * @param kunde     Der Kunde, für den vorgemerkt wenrden soll
+     * @param medien    Die Medien, die vorgemerkt werden sollen
+     * 
+     * @require istVormerkenMoeglich(kunde, medien) == true
+     */
+    void merkeVor(Kunde kunde, List<Medium> medien);
+    
+    /**
+     * Gibt alle Vormerkkarten als Liste zurück
+     * @return      Alle Vormerkkarten
+     */
+    List<Vormerkkarte> getVormerkkarten();
+
+    /**
+     * Gibt einen Kunden an Position x der Vormerkerliste zurück
+     * @param medium        Das Medium
+     * @param position      Die Position der Liste
+     * @return              Ein Kunde
+     */
+    Kunde getVormerkerAnPosition(Medium medium, int position);
 
 }

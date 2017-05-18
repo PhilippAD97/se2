@@ -8,6 +8,7 @@ import java.util.Map;
 import de.uni_hamburg.informatik.swt.se2.mediathek.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Verleihkarte;
+import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Vormerkkarte;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.AbstractObservableService;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.kundenstamm.KundenstammService;
@@ -29,6 +30,13 @@ public class VerleihServiceImpl extends AbstractObservableService
      * die Angabe des Mediums möglich. Beispiel: _verleihkarten.get(medium)
      */
     private Map<Medium, Verleihkarte> _verleihkarten;
+    
+    /**
+     * Diese Map speichert für jedes eingefügte Medium die dazugehörige
+     * Vormerkkarte. Ein Zugriff auf die Vormerkkarte ist dadurch leicht über
+     * die Angabe des Mediums möglich. Beispiel: _vormerkkarten.get(medium)
+     */
+    private Map<Medium, Vormerkkarte> _vormerkkarten;
 
     /**
      * Der Medienbestand.
@@ -67,6 +75,7 @@ public class VerleihServiceImpl extends AbstractObservableService
         _kundenstamm = kundenstamm;
         _medienbestand = medienbestand;
         _protokollierer = new VerleihProtokollierer();
+        _vormerkkarten = new HashMap<Medium, Vormerkkarte>();
     }
 
     /**
@@ -297,4 +306,77 @@ public class VerleihServiceImpl extends AbstractObservableService
         return result;
     }
 
+    @Override
+    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
+    {
+        boolean result = true;
+        // Iteriere über die Liste an übergebenen Medien
+        // und prüfe für jedes, ob vormerken möglich ist
+        for (Medium medium : medien)
+        {
+            if (existiertVormerkkarte(medium))
+            {
+                // Prüfe, ob diese Vormerkkarte mit diesem Kunden vormerkbar ist
+                result = result && _vormerkkarten.get(medium).istVormerkbar(kunde);
+            }
+            else
+            {
+                result = result && true;
+            }
+        }
+        return result;
+    }
+    
+    @Override
+    public void merkeVor(Kunde kunde, List<Medium> medien)
+    {
+        assert istVormerkenMoeglich(kunde, medien) : "Vorbedingung verletzt: istVormerkenMoeglich(kunde, medien)";
+        
+        for (Medium medium : medien) {
+            if(!existiertVormerkkarte(medium))
+            {
+                Vormerkkarte karte = new Vormerkkarte(medium, kunde);
+                _vormerkkarten.put(medium, karte);
+            }
+            else
+            {
+                Vormerkkarte karte = _vormerkkarten.get(medium);
+                karte.addVormerker(kunde);
+            }
+        }
+    }
+    
+    /**
+     * Gibt an, ob eine Vormerkkarte für ein gegebenes Medium existiert
+     * @param medium    Das Medium, für welches geprüft werden soll, ob eine Vormerkkarte existiert
+     * @return          true, wenn die Vormerkkarte existiert, sonst false
+     */
+    private boolean existiertVormerkkarte(Medium medium)
+    {
+        assert medium != null : "Vorbedingung verletzt: medium != null";
+        return _vormerkkarten.containsKey(medium);
+    }
+    
+    @Override
+    public List<Vormerkkarte> getVormerkkarten()
+    {
+        return new ArrayList<Vormerkkarte>(_vormerkkarten.values());
+    }
+    
+    @Override
+    public Kunde getVormerkerAnPosition(Medium medium, int position)
+    {
+        assert medium != null : "Vorbedingung verletzt: medium != null";
+        assert position > -1 : "Vorbedingung verletzt: position > -1";
+        assert position < 3 : "Vorbedingung verletzt: position < 3";
+        
+        if (existiertVormerkkarte(medium))
+        {
+            return _vormerkkarten.get(medium).gibAlleVormerkungen().get(position);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

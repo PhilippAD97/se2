@@ -227,5 +227,15 @@ public interface VerleihService extends ObservableService
      * @ensure (result != null)
      */
     Verleihkarte getVerleihkarteFuer(Medium medium);
+    
+    /**
+     * Prüft, ob das Vormerken für eine bestimmte Liste an Medien für einen
+     * Kunden möglich ist
+     * 
+     * @param kunde     Der Kunde
+     * @param medium    Liste an Medien
+     * @return          Ob vormerken möglich ist
+     */
+    boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medium);
 
 }

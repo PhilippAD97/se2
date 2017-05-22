@@ -234,7 +234,7 @@ public interface VerleihService extends ObservableService
      * Kunden möglich ist
      * 
      * @param kunde     Der Kunde
-     * @param medium    Liste an Medien
+     * @param medien    Liste an Medien
      * @return          Ob vormerken möglich ist
      * 
      * @require kunde != null
@@ -264,5 +264,13 @@ public interface VerleihService extends ObservableService
      * @return              Ein Kunde
      */
     Kunde getVormerkerAnPosition(Medium medium, int position);
+
+    /**
+     * Prüft, ob Kunde für alle ausgewählten Medien der erste Vormerker ist
+     * @param kunde         Ein Kunde
+     * @param medien        Eine Liste an Medien
+     * @return              true, wenn Kunde immer erster Vormerker ist, sonst false
+     */
+    boolean istImmerErsterVormerker(Kunde kunde, List<Medium> medien);
 
 }

@@ -34,7 +34,7 @@ public class Vormerkkarte
      * und speichert sofort einen Kunden als Vormerker
      * 
      * @param medium    Das Medium, für welches die Vormerkkarte gilt
-     * @param kunden    Ein Kunde, welcher dieses Medium vormerken möchte
+     * @param kunde     Ein Kunde, welcher dieses Medium vormerken möchte
      */
     public Vormerkkarte(Medium medium, Kunde kunde)
     {
@@ -68,7 +68,11 @@ public class Vormerkkarte
     public Kunde gibErsteVormerkung() {
         return _vormerkerListe.get(0);
     }
-    
+
+    /**
+     * Gibt die gesamte Vormerkerliste aus
+     * @return      Eine Liste an Vormerkungen
+     */
     public List<Kunde> gibAlleVormerkungen()
     {
         return _vormerkerListe;

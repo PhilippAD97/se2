@@ -17,7 +17,7 @@ import de.uni_hamburg.informatik.swt.se2.mediathek.services.medienbestand.Medien
 /**
  * Diese Klasse implementiert das Interface VerleihService. Siehe dortiger
  * Kommentar.
- * 
+ *
  * @author SE2-Team
  * @version SoSe 2017
  */
@@ -30,7 +30,7 @@ public class VerleihServiceImpl extends AbstractObservableService
      * die Angabe des Mediums möglich. Beispiel: _verleihkarten.get(medium)
      */
     private Map<Medium, Verleihkarte> _verleihkarten;
-    
+
     /**
      * Diese Map speichert für jedes eingefügte Medium die dazugehörige
      * Vormerkkarte. Ein Zugriff auf die Vormerkkarte ist dadurch leicht über
@@ -55,11 +55,11 @@ public class VerleihServiceImpl extends AbstractObservableService
 
     /**
      * Konstruktor. Erzeugt einen neuen VerleihServiceImpl.
-     * 
+     *
      * @param kundenstamm Der KundenstammService.
      * @param medienbestand Der MedienbestandService.
      * @param initialBestand Der initiale Bestand.
-     * 
+     *
      * @require kundenstamm != null
      * @require medienbestand != null
      * @require initialBestand != null
@@ -219,7 +219,14 @@ public class VerleihServiceImpl extends AbstractObservableService
             _verleihkarten.put(medium, verleihkarte);
             _protokollierer.protokolliere(
                     VerleihProtokollierer.EREIGNIS_AUSLEIHE, verleihkarte);
+            // Wenn Vormerkung existiert, entferne Position 1
+            if (existiertVormerkkarte(medium))
+            {
+                _vormerkkarten.get(medium).entferneErsteVormerkung();
+            }
         }
+
+
         // Was passiert wenn das Protokollieren mitten in der Schleife
         // schief geht? informiereUeberAenderung in einen finally Block?
         informiereUeberAenderung();
@@ -292,13 +299,11 @@ public class VerleihServiceImpl extends AbstractObservableService
     @Override
     public List<Verleihkarte> getVerleihkartenFuer(Kunde kunde)
     {
-        assert kundeImBestand(
-                kunde) : "Vorbedingung verletzt: kundeImBestand(kunde)";
+        assert kundeImBestand(kunde) : "Vorbedingung verletzt: kundeImBestand(kunde)";
         List<Verleihkarte> result = new ArrayList<Verleihkarte>();
         for (Verleihkarte verleihkarte : _verleihkarten.values())
         {
-            if (verleihkarte.getEntleiher()
-                .equals(kunde))
+            if (verleihkarte.getEntleiher().equals(kunde))
             {
                 result.add(verleihkarte);
             }
@@ -319,19 +324,15 @@ public class VerleihServiceImpl extends AbstractObservableService
                 // Prüfe, ob diese Vormerkkarte mit diesem Kunden vormerkbar ist
                 result = result && _vormerkkarten.get(medium).istVormerkbar(kunde);
             }
-            else
-            {
-                result = result && true;
-            }
         }
         return result;
     }
-    
+
     @Override
     public void merkeVor(Kunde kunde, List<Medium> medien)
     {
         assert istVormerkenMoeglich(kunde, medien) : "Vorbedingung verletzt: istVormerkenMoeglich(kunde, medien)";
-        
+
         for (Medium medium : medien) {
             if(!existiertVormerkkarte(medium))
             {
@@ -344,8 +345,10 @@ public class VerleihServiceImpl extends AbstractObservableService
                 karte.addVormerker(kunde);
             }
         }
+
+        informiereUeberAenderung();
     }
-    
+
     /**
      * Gibt an, ob eine Vormerkkarte für ein gegebenes Medium existiert
      * @param medium    Das Medium, für welches geprüft werden soll, ob eine Vormerkkarte existiert
@@ -356,21 +359,22 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert medium != null : "Vorbedingung verletzt: medium != null";
         return _vormerkkarten.containsKey(medium);
     }
-    
+
     @Override
     public List<Vormerkkarte> getVormerkkarten()
     {
         return new ArrayList<Vormerkkarte>(_vormerkkarten.values());
     }
-    
+
     @Override
     public Kunde getVormerkerAnPosition(Medium medium, int position)
     {
         assert medium != null : "Vorbedingung verletzt: medium != null";
         assert position > -1 : "Vorbedingung verletzt: position > -1";
         assert position < 3 : "Vorbedingung verletzt: position < 3";
-        
-        if (existiertVormerkkarte(medium))
+
+        // Wenn eine Vormerkkarte existiert und ein Eintrag an der Stelle x existiert
+        if (existiertVormerkkarte(medium) && _vormerkkarten.get(medium).gibAlleVormerkungen().size() > position)
         {
             return _vormerkkarten.get(medium).gibAlleVormerkungen().get(position);
         }
@@ -378,5 +382,20 @@ public class VerleihServiceImpl extends AbstractObservableService
         {
             return null;
         }
+    }
+
+    @Override
+    public boolean istImmerErsterVormerker(Kunde kunde, List<Medium> medien)
+    {
+        boolean result = true;
+        for(Medium medium : medien)
+        {
+            if(existiertVormerkkarte(medium))
+            {
+                result = result && (getVormerkerAnPosition(medium, 0).equals(kunde));
+            }
+        }
+
+        return result;
     }
 }

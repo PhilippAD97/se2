@@ -322,7 +322,8 @@ public class VerleihServiceImpl extends AbstractObservableService
             if (existiertVormerkkarte(medium))
             {
                 // Prüfe, ob diese Vormerkkarte mit diesem Kunden vormerkbar ist
-                result = result && _vormerkkarten.get(medium).istVormerkbar(kunde);
+                // und zusätzlich, ob der Kunde das Medium bereits ausgeliehen hat
+                result = result && _vormerkkarten.get(medium).istVormerkbar(kunde) && !istVerliehenAn(kunde, medium);
             }
         }
         return result;
@@ -387,15 +388,14 @@ public class VerleihServiceImpl extends AbstractObservableService
     @Override
     public boolean istImmerErsterVormerker(Kunde kunde, List<Medium> medien)
     {
-        boolean result = true;
         for(Medium medium : medien)
         {
-            if(existiertVormerkkarte(medium))
+            if(existiertVormerkkarte(medium) && !getVormerkerAnPosition(medium, 0).equals(kunde))
             {
-                result = result && (getVormerkerAnPosition(medium, 0).equals(kunde));
+                return false;
             }
         }
 
-        return result;
+        return true;
     }
 }

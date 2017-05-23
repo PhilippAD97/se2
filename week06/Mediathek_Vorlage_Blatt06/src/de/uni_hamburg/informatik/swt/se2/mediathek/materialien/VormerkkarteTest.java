@@ -37,20 +37,20 @@ public class VormerkkarteTest
         // Teste, ob das Medium richtig gesetzt wurde
         assertEquals(_medium, _karte.getMedium());
     }
-    
+
     @Test
     public void testeIstVormerkbar()
     {
         // Versuche, mit dem selben Kunden 2-mal vorzumerken
         _karte.addVormerker(_kunde1);
         assertEquals(_karte.istVormerkbar(_kunde1), false);
-        
+
         // Versuche, einen 4ten Kunden vorzumerken
         _karte.addVormerker(_kunde2);
         _karte.addVormerker(_kunde3);
         assertEquals(_karte.istVormerkbar(_kunde4), false);
     }
-    
+
     @Test
     public void testeVormerken()
     {
@@ -58,12 +58,26 @@ public class VormerkkarteTest
         _karte.entferneErsteVormerkung();
         _karte.entferneErsteVormerkung();
         _karte.entferneErsteVormerkung();
-        
+
         // Füge 3 Vormerkungen hinzu und teste,
         // ob die erste Vormerkung auch tatsächlich die erste Vormerkung war
         _karte.addVormerker(_kunde4);
         _karte.addVormerker(_kunde2);
         _karte.addVormerker(_kunde3);
-        assertEquals(_karte.gibErsteVormerkung() ,_kunde4);
+        assertEquals(_karte.gibErsteVormerkung(), _kunde4);
     }
+
+    @Test
+    public void testeHatKundeVorgemerkt()
+    {
+        // Eine Vormerkung löschen
+        _karte.entferneErsteVormerkung();
+
+        //Füge einen Vormerker hinzu und prüft
+        //ob der kunde4 auch wirklich vorgemerkt hat
+        _karte.addVormerker(_kunde4);
+        assertEquals(_karte.hatKundeVorgemerkt(_kunde4), true);
+
+    }
+
 }

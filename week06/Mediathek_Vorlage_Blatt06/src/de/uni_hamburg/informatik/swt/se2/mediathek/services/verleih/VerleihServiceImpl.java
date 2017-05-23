@@ -222,10 +222,10 @@ public class VerleihServiceImpl extends AbstractObservableService
             // Wenn Vormerkung existiert, entferne Position 1
             if (existiertVormerkkarte(medium))
             {
-                _vormerkkarten.get(medium).entferneErsteVormerkung();
+                _vormerkkarten.get(medium)
+                    .entferneErsteVormerkung();
             }
         }
-
 
         // Was passiert wenn das Protokollieren mitten in der Schleife
         // schief geht? informiereUeberAenderung in einen finally Block?
@@ -299,11 +299,13 @@ public class VerleihServiceImpl extends AbstractObservableService
     @Override
     public List<Verleihkarte> getVerleihkartenFuer(Kunde kunde)
     {
-        assert kundeImBestand(kunde) : "Vorbedingung verletzt: kundeImBestand(kunde)";
+        assert kundeImBestand(
+                kunde) : "Vorbedingung verletzt: kundeImBestand(kunde)";
         List<Verleihkarte> result = new ArrayList<Verleihkarte>();
         for (Verleihkarte verleihkarte : _verleihkarten.values())
         {
-            if (verleihkarte.getEntleiher().equals(kunde))
+            if (verleihkarte.getEntleiher()
+                .equals(kunde))
             {
                 result.add(verleihkarte);
             }
@@ -332,10 +334,12 @@ public class VerleihServiceImpl extends AbstractObservableService
     @Override
     public void merkeVor(Kunde kunde, List<Medium> medien)
     {
-        assert istVormerkenMoeglich(kunde, medien) : "Vorbedingung verletzt: istVormerkenMoeglich(kunde, medien)";
+        assert istVormerkenMoeglich(kunde,
+                medien) : "Vorbedingung verletzt: istVormerkenMoeglich(kunde, medien)";
 
-        for (Medium medium : medien) {
-            if(!existiertVormerkkarte(medium))
+        for (Medium medium : medien)
+        {
+            if (!existiertVormerkkarte(medium))
             {
                 Vormerkkarte karte = new Vormerkkarte(medium, kunde);
                 _vormerkkarten.put(medium, karte);
@@ -375,9 +379,13 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert position < 3 : "Vorbedingung verletzt: position < 3";
 
         // Wenn eine Vormerkkarte existiert und ein Eintrag an der Stelle x existiert
-        if (existiertVormerkkarte(medium) && _vormerkkarten.get(medium).gibAlleVormerkungen().size() > position)
+        if (existiertVormerkkarte(medium) && _vormerkkarten.get(medium)
+            .gibAlleVormerkungen()
+            .size() > position)
         {
-            return _vormerkkarten.get(medium).gibAlleVormerkungen().get(position);
+            return _vormerkkarten.get(medium)
+                .gibAlleVormerkungen()
+                .get(position);
         }
         else
         {
@@ -394,6 +402,7 @@ public class VerleihServiceImpl extends AbstractObservableService
             {
                 return false;
             }
+    
         }
 
         return true;

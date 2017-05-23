@@ -150,8 +150,9 @@ public class VerleihServiceImplTest
         assertFalse(ereignisse[0]);
     }
     
+    
     @Test
-    public void testeKundeIstNachVormerkungVorgemerkt()
+    public void testeKundeIstNachVormerkungNichtAusleihbar()
     {
         List<Medium> medien = new ArrayList<Medium>();
         medien.add(new CD("titel", "kommentar", "interpret", 20));

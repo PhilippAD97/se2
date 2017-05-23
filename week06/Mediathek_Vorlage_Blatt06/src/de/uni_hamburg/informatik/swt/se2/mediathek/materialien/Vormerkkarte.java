@@ -14,39 +14,44 @@ import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 public class Vormerkkarte
 {
 
-    private final Medium _medium;
+    private final Medium MEDIUM;
     private final int MAX_VORMERKER = 3;
     private List<Kunde> _vormerkerListe = new ArrayList<Kunde>(MAX_VORMERKER);
-    
+
     /**
      * Erzeugt eine neue Vormerkkarte
      * 
      * @param medium    Das Medium, für welches die Vormerkkarte gilt
+     * 
+     * @require kunde != null
      */
     public Vormerkkarte(Medium medium)
     {
         assert medium != null : "Vorbedingung verletzt: medium != null";
-        _medium = medium;
+        MEDIUM = medium;
     }
-    
+
     /**
      * Erzeugt eine neue Vormerkkarte 
      * und speichert sofort einen Kunden als Vormerker
      * 
      * @param medium    Das Medium, für welches die Vormerkkarte gilt
      * @param kunde     Ein Kunde, welcher dieses Medium vormerken möchte
+     * 
+     * @require medium != null
+     * @require kunde != null
      */
     public Vormerkkarte(Medium medium, Kunde kunde)
     {
         assert medium != null : "Vorbedingung verletzt: medium != null";
         assert kunde != null : "Vorbedingung verletzt: kunde != null";
-        _medium = medium;
+        MEDIUM = medium;
         addVormerker(kunde);
     }
-    
+
     /**
      * Fügt einen Kunden als Vormerker hinzu
-     * @param kunde     Der Kunde, welcher vormerkt werden soll
+     * @param kunde     Der Kunde, welcher vorgemerkt werden soll
      * 
      * @require kunde != null
      * @require istVormerkbar() == true
@@ -56,16 +61,18 @@ public class Vormerkkarte
     public void addVormerker(Kunde kunde)
     {
         assert kunde != null : "Vorbedingung verletzt: kunde != null";
-        assert istVormerkbar(kunde) != false : "Vorbedingung verletzt: istVormerkbar(kunde) != false";
+        assert istVormerkbar(
+                kunde) != false : "Vorbedingung verletzt: istVormerkbar(kunde) != false";
         _vormerkerListe.add(kunde);
     }
-    
+
     /**
      * Gibt den ersten Vormerker aus der Liste zurück
      * 
      * @return      Den ersten Vormerker für diese Vormerkkarte
      */
-    public Kunde gibErsteVormerkung() {
+    public Kunde gibErsteVormerkung()
+    {
         return _vormerkerListe.get(0);
     }
 
@@ -77,7 +84,7 @@ public class Vormerkkarte
     {
         return _vormerkerListe;
     }
-    
+
     /**
      * Entfernt den ersten Vormerker aus der Liste
      */
@@ -89,27 +96,40 @@ public class Vormerkkarte
             _vormerkerListe.remove(0);
         }
     }
-    
+
     /**
      * Prüft, ob eine Vormerkung für einen speziellen Kunden möglich ist
      * 
      * @param kunde     Der Kunde, für den die Überprüfung stattfinden soll
      * @return          true, wenn Vormerkung möglich ist, sonst false
+     * 
+     * @require kunde != null
      */
     public boolean istVormerkbar(Kunde kunde)
     {
         assert kunde != null : "Vorbedingung verletzt: kunde != null";
         // Das Medium ist vormerkbar, wenn der Kunde nicht bereits vorgemerkt hat
         // und die VormerkerListe kleiner als die maximal erlaubte Anzahl an Vormerkern ist
-        return (!hatKundeVorgemerkt(kunde) && _vormerkerListe.size() < MAX_VORMERKER);
+        return (!hatKundeVorgemerkt(kunde)
+                && _vormerkerListe.size() < MAX_VORMERKER);
     }
-    
-    // TODO Auslagern in den Verleihservice
+
+    /**
+     * Prüft, ob ein Kunde vorgemerkt hat.
+     * 
+     * @param kunde  Der Kunde, für den die Überprüfung stattfinden soll
+     * @return true, wenn Kunde vorgemerkt hat, sonst false 
+     * 
+     * @require kunde != null
+     */
     public boolean hatKundeVorgemerkt(Kunde kunde)
     {
+        assert kunde != null : "Vorbedingung verletzt: kunde != null";
+        
         for (int i = 0; i < _vormerkerListe.size(); i++)
         {
-            if (_vormerkerListe.get(i).equals(kunde))
+            if (_vormerkerListe.get(i)
+                .equals(kunde))
             {
                 // Sobald eine Übereinstimmung gefunden wurde,
                 // kann sofort true zurückgegeben werden
@@ -118,13 +138,14 @@ public class Vormerkkarte
         }
         return false;
     }
-    
+
     /**
      * Gibt das Medium für diese Vormerkkarte zurück
      * 
      * @return      Ein Medium
      */
-    public Medium getMedium() {
-        return _medium;
+    public Medium getMedium()
+    {
+        return MEDIUM;
     }
 }

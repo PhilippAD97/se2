@@ -143,7 +143,7 @@ public class PlatzVerkaufsWerkzeug
     }
 
     /**
-     * Aktualisiert den Platzplan basierend auf der ausgwählten Vorstellung.
+     * Aktualisiert den Platzplan basierend auf der ausgewählten Vorstellung.
      */
     private void aktualisierePlatzplan()
     {

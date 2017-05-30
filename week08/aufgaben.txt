@@ -1,0 +1,24 @@
+Aufgaben
+
+1)	KassenWerkzeug
+		DatumAuswaehlWerkzeug
+		PlatzVerkaufsWerkzeug
+		VorstellungsAuswaehlWerkzeug
+
+2)	- Anderes Datum wird ausgewählt (DatumAuswaehlWerkzeug)
+		--> VorstellungsAuswaehlWerkzeug muss reagieren
+		--> PlatzVerkaufsWerkzeug muss reagieren
+		--> (KassenWerkzeug muss reagieren)
+	- Andere Vorstellung wird ausgewählt (VorstellungsAuswaehlWerkzeug)
+		--> PlatzVerkaufsWerkzeug muss reagieren
+		--> (KassenWerkzeug muss reagieren)
+
+Nach dem Erstellen eines Subwerkzeugs im Kontextwerkzeug wird mittels der Methode 'setzeBeobachter()' an dem jeweiligen Subwerkzeug der Beobachter registriert.
+Bei einer Änderung im UI wird im Werkzeug mittels 'meldeAenderung()' an jedem Beobachter die Änderung gemeldet.
+Der Beobachter implementiert die Methode 'beachteAenderung()', welche wiederum Methoden aufruft, um die Subwerkzeuge zu aktualisieren.
+
+4) Wir prüfen nicht, in welchem Subwerkzeug die Änderung aufgetreten ist, wir reagieren lediglich auf das Ereignis. Das Kontextwerkzeug nimmt sich den neuen Zustand aus dem Subwerkzeug selbst.
+
+
+	
+	

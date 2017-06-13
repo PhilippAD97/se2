@@ -52,7 +52,7 @@ abstract public class Beobachtbar
      *
      * @require b != null
      */
-    public void istBeobachter(Beobachter b)
+    public boolean istBeobachter(Beobachter b)
     {
         assert b != null : "Vorbedingung verletzt: b != null";
         return _beobachter.contains(b);

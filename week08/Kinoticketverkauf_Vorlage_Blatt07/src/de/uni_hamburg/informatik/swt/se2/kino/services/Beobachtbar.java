@@ -13,7 +13,7 @@ abstract public class Beobachtbar
     /**
      * Erzeugt ein neues Exemplar
      */
-    Beobachtbar()
+    protected Beobachtbar()
     {
         _beobachterSet = new HashSet<Beobachter>();
     }

@@ -21,7 +21,10 @@ abstract public class Beobachtbar
     /**
      * Fügt einen Beobachter der Liste hinzu
      * @param b     Ein Beobachter
+     *
      * @require b != null
+     *
+     * @ensure istBeobachter(b) == true
      */
     public void setzeBeobachter(Beobachter b)
     {
@@ -32,12 +35,27 @@ abstract public class Beobachtbar
     /**
      * Entfernt einen Beobachter aus der Liste
      * @param b     Ein Beobachter
+     *
      * @require b != null
+     *
+     * @ensure istBeobachter(b) == false
      */
     public void entferneBeobachter(Beobachter b)
     {
         assert b != null : "Vorbedingung verletzt: b != null";
         _beobachter.remove(b);
+    }
+
+    /**
+     * Prüft ob ein Beobachter registriert ist
+     * @param b     Ein Beobachter
+     *
+     * @require b != null
+     */
+    public void istBeobachter(Beobachter b)
+    {
+        assert b != null : "Vorbedingung verletzt: b != null";
+        return _beobachter.contains(b);
     }
 
     /**

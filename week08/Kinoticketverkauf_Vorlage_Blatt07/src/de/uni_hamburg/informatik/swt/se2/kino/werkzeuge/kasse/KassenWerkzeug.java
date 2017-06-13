@@ -3,8 +3,9 @@ package de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.kasse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import de.uni_hamburg.informatik.swt.se2.kino.services.Beobachter;
-import de.uni_hamburg.informatik.swt.se2.kino.services.Beobachtbar;
+import java.util.Observable;
+import java.util.Observer;
+
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.kino.materialien.Kino;
 import de.uni_hamburg.informatik.swt.se2.kino.materialien.Tagesplan;
@@ -61,24 +62,16 @@ public class KassenWerkzeug
         setzeTagesplanFuerAusgewaehltesDatum();
         setzeAusgewaehlteVorstellung();
 
-        // Setze Beobachter für VorstellungsAuswaehlWerkzeug
-        _vorstellungAuswaehlWerkzeug.setzeBeobachter(new Beobachter()
+        // Setze Observer für VorstellungsAuswaehlWerkzeug
+        _vorstellungAuswaehlWerkzeug.addObserver((observable, args) ->
         {
-            @Override
-            public void beachteAenderung()
-            {
-                setzeAusgewaehlteVorstellung();
-            }
+            setzeAusgewaehlteVorstellung();
         });
 
-        // Setze Beobachter für DatumAuswaehlWerkzeug
-        _datumAuswaehlWerkzeug.setzeBeobachter(new Beobachter()
+        // Setze Observer für DatumAuswaehlWerkzeug
+        _datumAuswaehlWerkzeug.addObserver((observable, args) ->
         {
-            @Override
-            public void beachteAenderung()
-            {
-                setzeTagesplanFuerAusgewaehltesDatum();
-            }
+            setzeTagesplanFuerAusgewaehltesDatum();
         });
 
         _ui.zeigeFenster();

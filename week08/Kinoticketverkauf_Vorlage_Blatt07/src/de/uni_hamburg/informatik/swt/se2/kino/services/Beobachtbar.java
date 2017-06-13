@@ -8,14 +8,14 @@ import java.util.HashSet;
 abstract public class Beobachtbar
 {
 
-    private HashSet<Beobachter> _beobachter;
+    private HashSet<Beobachter> _beobachterSet;
 
     /**
      * Erzeugt ein neues Exemplar
      */
-    protected Beobachtbar()
+    Beobachtbar()
     {
-        _beobachter = new HashSet<Beobachter>();
+        _beobachterSet = new HashSet<Beobachter>();
     }
 
     /**
@@ -29,7 +29,7 @@ abstract public class Beobachtbar
     public void setzeBeobachter(Beobachter b)
     {
         assert b != null : "Vorbedingung verletzt: b != null";
-        _beobachter.add(b);
+        _beobachterSet.add(b);
     }
 
     /**
@@ -43,7 +43,7 @@ abstract public class Beobachtbar
     public void entferneBeobachter(Beobachter b)
     {
         assert b != null : "Vorbedingung verletzt: b != null";
-        _beobachter.remove(b);
+        _beobachterSet.remove(b);
     }
 
     /**
@@ -52,10 +52,10 @@ abstract public class Beobachtbar
      *
      * @require b != null
      */
-    public void istBeobachter(Beobachter b)
+    public boolean istBeobachter(Beobachter b)
     {
         assert b != null : "Vorbedingung verletzt: b != null";
-        return _beobachter.contains(b);
+        return _beobachterSet.contains(b);
     }
 
     /**
@@ -63,7 +63,7 @@ abstract public class Beobachtbar
      */
     protected void meldeAenderung()
     {
-        for (Beobachter b : _beobachter)
+        for (Beobachter b : _beobachterSet)
         {
             b.beachteAenderung();
         }

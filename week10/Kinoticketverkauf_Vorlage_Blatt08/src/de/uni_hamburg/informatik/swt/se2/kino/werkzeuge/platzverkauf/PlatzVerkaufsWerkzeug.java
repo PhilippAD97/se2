@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Platz;
 import de.uni_hamburg.informatik.swt.se2.kino.materialien.Kinosaal;
 import de.uni_hamburg.informatik.swt.se2.kino.materialien.Vorstellung;
+import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.barzahlung.BarzahlungsWerkzeug;
 
 /**
  * Mit diesem Werkzeug können Plätze verkauft und storniert werden. Es arbeitet
@@ -27,6 +28,7 @@ public class PlatzVerkaufsWerkzeug
     private Vorstellung _vorstellung;
 
     private PlatzVerkaufsWerkzeugUI _ui;
+    private BarzahlungsWerkzeug _bahrzahlungsWerkzeug = new BarzahlungsWerkzeug();
 
     /**
      * Initialisiert das PlatzVerkaufsWerkzeug.
@@ -90,7 +92,12 @@ public class PlatzVerkaufsWerkzeug
      */
     private void fuehreBarzahlungDurch()
     {
-        verkaufePlaetze(_vorstellung);
+        int preis = _vorstellung.getPreisFuerPlaetze(_ui.getPlatzplan().getAusgewaehltePlaetze());
+        _bahrzahlungsWerkzeug.start(preis);
+        if (_bahrzahlungsWerkzeug.getSuccess())
+        {
+            verkaufePlaetze(_vorstellung);
+        }
     }
 
     /**
@@ -183,7 +190,8 @@ public class PlatzVerkaufsWerkzeug
     /**
      * Setzt am Platzplan die Anzahl der Reihen und der Sitze.
      * 
-     * @param saal Ein Saal mit dem der Platzplan initialisiert wird.
+     * @param reihen Die Anzahl an Reihen
+     * @param sitzeProReihe Die Anzahl Sitze pro Reihe
      */
     private void initialisierePlatzplan(int reihen, int sitzeProReihe)
     {

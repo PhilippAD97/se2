@@ -24,6 +24,7 @@ class BarzahlungsWerkzeugUI
     private JLabel _preisLabel;
     private JFormattedTextField _inputFeld;
     private JLabel _restbetragLabel;
+    private JLabel _bezahlterbetragLabel;
     private JButton _okButton;
     private JButton _dismissButton;
 
@@ -51,7 +52,7 @@ class BarzahlungsWerkzeugUI
         dialog.setTitle("Barzahlung");
 
         // Set Layout, Border and Size
-        dialog.setLayout(new GridLayout(4, 1, 4, 0));
+        dialog.setLayout(new GridLayout(5, 1, 4, 0));
         dialog.getRootPane().setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         dialog.setSize(220, 220);
         dialog.getRootPane().setBackground(backgroundColor);
@@ -93,8 +94,16 @@ class BarzahlungsWerkzeugUI
         _restbetragLabel = new JLabel();
         _restbetragLabel.setForeground(Color.white);
         restbetragPanel.add(_restbetragLabel);
-        dialog.add(restbetragPanel);
         restbetragPanel.setBackground(backgroundColor);
+        dialog.add(restbetragPanel);
+        
+        // bezahlter Betrag panel
+        JPanel bezahlterbetragPanel = new JPanel();
+        bezahlterbetragPanel.setLayout(new GridLayout(1, 2));
+        bezahlterbetragPanel.add(new JLabel("Bezahlt:"));
+        _bezahlterbetragLabel = new JLabel();
+        bezahlterbetragPanel.add(_bezahlterbetragLabel);
+        dialog.add(bezahlterbetragPanel);
 
         // OK / Abbrechen - Buttons
         JPanel buttonPanel = new JPanel();
@@ -150,6 +159,16 @@ class BarzahlungsWerkzeugUI
     }
 
     /**
+     * Gibt das bezahlterBetrag Label zurück
+     * @return Das bezahlte Betrag Label
+     */
+    JLabel getBezahlterbetragLabel()
+    {
+        return  _bezahlterbetragLabel;
+    }
+    
+   
+    /**
      * Gibt den OK-Button zurück
      * @return Der OK-Button
      */
@@ -175,5 +194,6 @@ class BarzahlungsWerkzeugUI
         _preisLabel.setText("");
         _inputFeld.setValue(null);
         _restbetragLabel.setText("");
+        _bezahlterbetragLabel.setText("");
     }
 }

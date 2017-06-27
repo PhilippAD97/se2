@@ -2,6 +2,7 @@ package de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.barzahlung;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,6 +18,7 @@ public class BarzahlungsWerkzeug
     private boolean _success;
     private int _totalAmount;
     private int _restAmount;
+    private int _bezahlterBetrag;
 
     /**
      * Erzeugt ein neues Exemplar
@@ -36,8 +38,10 @@ public class BarzahlungsWerkzeug
         _success = false;
         _totalAmount = preis;
         _restAmount = -preis;
+        _bezahlterBetrag = 0;
         _ui.getPreisLabel().setText(_totalAmount + " Eurocent");
         _ui.getRestbetragLabel().setText(_restAmount + " Eurocent");
+        _ui.getBezahlterbetragLabel().setText(_bezahlterBetrag + " Eurocent");
         _ui.getOkButton().setEnabled(false);
         _ui.getMainDialog().setVisible(true);
     }
@@ -87,7 +91,11 @@ public class BarzahlungsWerkzeug
             {
                 betragWurdeEingegeben();
             }
+
+            
         });
+        
+        
     }
 
     /**
@@ -117,6 +125,7 @@ public class BarzahlungsWerkzeug
         try
         {
             _restAmount += Integer.parseInt(_ui.getInputFeld().getText());
+            _bezahlterBetrag += Integer.parseInt(_ui.getInputFeld().getText());
         }
         catch (NumberFormatException err)
         {
@@ -128,6 +137,7 @@ public class BarzahlungsWerkzeug
 
         // Update label text
         _ui.getRestbetragLabel().setText(_restAmount + " Eurocent");
+        _ui.getBezahlterbetragLabel().setText(_bezahlterBetrag + " Eurocent");
 
         // Set _success variable to true in case >100% has been paid
         if (_restAmount >= 0)

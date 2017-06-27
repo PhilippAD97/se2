@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  * Mit diesem Werkzeug findet die Barbezahlung statt.
@@ -39,6 +41,7 @@ public class BarzahlungsWerkzeug
         _ui.getPreisLabel().setText(_totalAmount + " Eurocent");
         _ui.getRestbetragLabel().setText(_restAmount + " Eurocent");
         _ui.getOkButton().setEnabled(false);
+        _ui.getInputFeld().requestFocus();
         _ui.getMainDialog().setVisible(true);
     }
 
@@ -88,6 +91,19 @@ public class BarzahlungsWerkzeug
                 betragWurdeEingegeben();
             }
         });
+
+        // Listen for changes in the text
+        _ui.getInputFeld().getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                betragEingabeGeaendert();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                betragEingabeGeaendert();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                betragEingabeGeaendert();
+            }
+        });
     }
 
     /**
@@ -103,6 +119,7 @@ public class BarzahlungsWerkzeug
      */
     private void dismissButtonWurdeGeklickt()
     {
+        _success = false;
         _ui.reset();
         _ui.getMainDialog().setVisible(false);
     }
@@ -136,6 +153,22 @@ public class BarzahlungsWerkzeug
             // Activate OK-Button
             _ui.getOkButton().setEnabled(true);
         }
+    }
+
+    private void betragEingabeGeaendert()
+    {
+        int inputValue = 0;
+
+        try
+        {
+            inputValue = Integer.parseInt(_ui.getInputFeld().getText());
+        }
+        catch (NumberFormatException err)
+        {
+            // No int found
+        }
+
+        _ui.getRestbetragLabel().setText(_restAmount + inputValue + " Eurocent");
     }
 
     /**

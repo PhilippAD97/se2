@@ -100,10 +100,14 @@ class BarzahlungsWerkzeugUI
         // bezahlter Betrag panel
         JPanel bezahlterbetragPanel = new JPanel();
         bezahlterbetragPanel.setLayout(new GridLayout(1, 2));
-        bezahlterbetragPanel.add(new JLabel("Bezahlt:"));
+        JLabel bezahlterBetragLabelKey = new JLabel("Bezahlt:");
+        bezahlterBetragLabelKey.setForeground(Color.white);
+        bezahlterbetragPanel.add(bezahlterBetragLabelKey);
         _bezahlterbetragLabel = new JLabel();
+        _bezahlterbetragLabel.setForeground(Color.white);
         bezahlterbetragPanel.add(_bezahlterbetragLabel);
         dialog.add(bezahlterbetragPanel);
+        bezahlterbetragPanel.setBackground(backgroundColor);
 
         // OK / Abbrechen - Buttons
         JPanel buttonPanel = new JPanel();

@@ -26,7 +26,9 @@ class BarzahlungsWerkzeugUI
     private JButton _okButton;
     private JButton _dismissButton;
 
-    // TODO: Quelltextkommentar
+    /**
+     * Erzeugt ein neues Exemplar
+     */
     BarzahlungsWerkzeugUI()
     {
         _hauptModal = erzeugeModal();
@@ -34,6 +36,8 @@ class BarzahlungsWerkzeugUI
 
     /**
      * Erstellt das Modal mit den Widgets.
+     *
+     * @return Das fertige Modal
      */
     private JDialog erzeugeModal()
     {
@@ -87,44 +91,64 @@ class BarzahlungsWerkzeugUI
         return dialog;
     }
 
-    // TODO: Quelltextkommentar
-    public JDialog getMainDialog()
+    /**
+     * Gibt das komplette Modal zurück
+     * @return Das Haupt-Modal
+     */
+    JDialog getMainDialog()
     {
         return _hauptModal;
     }
 
-    // TODO: Quelltextkommentar
-    public JLabel getPreisLabel()
+    /**
+     * Gibt das Preis-Label zurück
+     * @return Das Preis-Label
+     */
+    JLabel getPreisLabel()
     {
         return _preisLabel;
     }
 
-    // TODO: Quelltextkommentar
-    public JFormattedTextField getInputFeld()
+    /**
+     * Gibt das Input-Feld zurück
+     * @return Das Input-Feld
+     */
+    JFormattedTextField getInputFeld()
     {
         return _inputFeld;
     }
 
-    // TODO: Quelltextkommentar
-    public JLabel getRestbetragLabel()
+    /**
+     * Gibt das Restbetrag-Label zurück
+     * @return Das Restbetrag-Label
+     */
+    JLabel getRestbetragLabel()
     {
         return _restbetragLabel;
     }
 
-    // TODO: Quelltextkommentar
-    public JButton getOkButton()
+    /**
+     * Gibt den OK-Button zurück
+     * @return Der OK-Button
+     */
+    JButton getOkButton()
     {
         return _okButton;
     }
 
-    // TODO: Quelltextkommentar
-    public JButton getDismissButton()
+    /**
+     * Gibt den Abbrechen-Button zurück
+     * @return Der Abbrechen-Button
+     */
+    JButton getDismissButton()
     {
         return _dismissButton;
     }
-    
-    // TODO: Quelltextkommentar
-    public void reset()
+
+    /**
+     * Setzt die Label und das Inputfeld zurück (leer)
+     */
+    void reset()
     {
         _preisLabel.setText("");
         _inputFeld.setValue(null);

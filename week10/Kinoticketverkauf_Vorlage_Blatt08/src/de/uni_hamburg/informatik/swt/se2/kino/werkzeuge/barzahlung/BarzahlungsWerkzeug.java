@@ -5,7 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-// TODO: Quelltextkommentar
+/**
+ * Mit diesem Werkzeug findet die Barbezahlung statt.
+ *
+ * @author Fruchtzwerge
+ * @version SoSe 2017
+ */
 public class BarzahlungsWerkzeug
 {
     private BarzahlungsWerkzeugUI _ui;
@@ -13,14 +18,19 @@ public class BarzahlungsWerkzeug
     private int _totalAmount;
     private int _restAmount;
 
-    // TODO: Quelltextkommentar
+    /**
+     * Erzeugt ein neues Exemplar
+     */
     public BarzahlungsWerkzeug()
     {
         _ui = new BarzahlungsWerkzeugUI();
         registriereUIAktionen();
     }
 
-    // TODO: Quelltextkommentar
+    /**
+     * Startet den Barzahlungsprozess
+     * @param preis Der zu zahlende Preis
+     */
     public void start(int preis)
     {
         _success = false;
@@ -80,20 +90,27 @@ public class BarzahlungsWerkzeug
         });
     }
 
-    // TODO: Quelltextkommentar
+    /**
+     * Reagiert darauf, wenn der OK-Button geklickt wurde.
+     */
     private void okButtonWurdeGeklickt()
     {
         _ui.getMainDialog().setVisible(false);
     }
 
-    // TODO: Quelltextkommentar
+    /**
+     * Reagiert darauf, wenn der Abbrechen-Button geklickt wurde.
+     */
     private void dismissButtonWurdeGeklickt()
     {
         _ui.reset();
         _ui.getMainDialog().setVisible(false);
     }
 
-    // TODO: Quelltextkommentar
+    /**
+     * Reagiert darauf, wenn ein Betrag in das Eingabefeld
+     * eingegeben wurde.
+     */
     private void betragWurdeEingegeben()
     {
         try
@@ -105,16 +122,26 @@ public class BarzahlungsWerkzeug
             // TODO: handle Error
         }
 
+        // Reset InputField
         _ui.getInputFeld().setValue(null);
+
+        // Update label text
         _ui.getRestbetragLabel().setText(_restAmount + " Eurocent");
+
+        // Set _success variable to true in case >100% has been paid
         if (_restAmount >= 0)
         {
             _success = true;
+
+            // Activate OK-Button
             _ui.getOkButton().setEnabled(true);
         }
     }
 
-    // TODO: Quelltextkommentar
+    /**
+     * Gibt den Erfolgs-Zustand des Bezahlvorgangs zurück
+     * @return Der Erfolgs-Zustand
+     */
     public boolean getSuccess()
     {
         return _success;

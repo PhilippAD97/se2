@@ -103,6 +103,7 @@ public class BarzahlungsWerkzeug
      */
     private void dismissButtonWurdeGeklickt()
     {
+        _success = false;
         _ui.reset();
         _ui.getMainDialog().setVisible(false);
     }

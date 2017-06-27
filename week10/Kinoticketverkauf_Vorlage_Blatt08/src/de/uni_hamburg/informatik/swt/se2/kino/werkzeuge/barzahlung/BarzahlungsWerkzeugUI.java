@@ -63,7 +63,11 @@ class BarzahlungsWerkzeugUI
         NumberFormat format = NumberFormat.getInstance();
         format.setGroupingUsed(false);
         NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
+        //formatter.setCommitsOnValidEdit(true);
         _inputFeld = new JFormattedTextField(formatter);
         dialog.add(_inputFeld);
 

@@ -39,6 +39,7 @@ public class BarzahlungsWerkzeug
         _ui.getPreisLabel().setText(_totalAmount + " Eurocent");
         _ui.getRestbetragLabel().setText(_restAmount + " Eurocent");
         _ui.getOkButton().setEnabled(false);
+        _ui.getInputFeld().requestFocus();
         _ui.getMainDialog().setVisible(true);
     }
 

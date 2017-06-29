@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.JFormattedTextField;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
@@ -23,6 +24,7 @@ class BarzahlungsWerkzeugUI
     private JLabel _preisLabel;
     private JFormattedTextField _inputFeld;
     private JLabel _restbetragLabel;
+    private JLabel _bezahlterbetragLabel;
     private JButton _okButton;
     private JButton _dismissButton;
 
@@ -41,23 +43,32 @@ class BarzahlungsWerkzeugUI
      */
     private JDialog erzeugeModal()
     {
+        Color backgroundColor = new Color (20,20,20);
+        Color inputBackgroundColor = new Color (50,50,50);
+
         // Create JDialog as modal
         JDialog dialog = new JDialog();
         dialog.setModal(true);
         dialog.setTitle("Barzahlung");
 
         // Set Layout, Border and Size
-        dialog.setLayout(new GridLayout(4, 1, 4, 0));
+        dialog.setLayout(new GridLayout(5, 1, 4, 0));
         dialog.getRootPane().setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         dialog.setSize(220, 220);
+        dialog.getRootPane().setBackground(backgroundColor);
+        dialog.getRootPane().setForeground(Color.white);
 
         // Preis-Panel
         JPanel preisPanel = new JPanel();
         preisPanel.setLayout(new GridLayout(1, 2));
-        preisPanel.add(new JLabel("Preis:"));
+        JLabel preisLabelKey = new JLabel("Preis:");
+        preisLabelKey.setForeground(Color.white);
+        preisPanel.add(preisLabelKey);
         _preisLabel = new JLabel();
+        _preisLabel.setForeground(Color.white);
         preisPanel.add(_preisLabel);
         dialog.add(preisPanel);
+        preisPanel.setBackground(backgroundColor);
 
         // Text-Input
         NumberFormat format = NumberFormat.getInstance();
@@ -69,15 +80,34 @@ class BarzahlungsWerkzeugUI
         formatter.setAllowsInvalid(false);
         //formatter.setCommitsOnValidEdit(true);
         _inputFeld = new JFormattedTextField(formatter);
+        _inputFeld.setOpaque(true);
+        _inputFeld.setBackground(inputBackgroundColor);
+        _inputFeld.setForeground(Color.white);
         dialog.add(_inputFeld);
 
         // Restbetrag-Panel
         JPanel restbetragPanel = new JPanel();
         restbetragPanel.setLayout(new GridLayout(1, 2));
-        restbetragPanel.add(new JLabel("Restbetrag:"));
+        JLabel restbetragLabelKey = new JLabel("Restbetrag:");
+        restbetragLabelKey.setForeground(Color.white);
+        restbetragPanel.add(restbetragLabelKey);
         _restbetragLabel = new JLabel();
+        _restbetragLabel.setForeground(Color.white);
         restbetragPanel.add(_restbetragLabel);
+        restbetragPanel.setBackground(backgroundColor);
         dialog.add(restbetragPanel);
+        
+        // bezahlter Betrag panel
+        JPanel bezahlterbetragPanel = new JPanel();
+        bezahlterbetragPanel.setLayout(new GridLayout(1, 2));
+        JLabel bezahlterBetragLabelKey = new JLabel("Bezahlt:");
+        bezahlterBetragLabelKey.setForeground(Color.white);
+        bezahlterbetragPanel.add(bezahlterBetragLabelKey);
+        _bezahlterbetragLabel = new JLabel();
+        _bezahlterbetragLabel.setForeground(Color.white);
+        bezahlterbetragPanel.add(_bezahlterbetragLabel);
+        dialog.add(bezahlterbetragPanel);
+        bezahlterbetragPanel.setBackground(backgroundColor);
 
         // OK / Abbrechen - Buttons
         JPanel buttonPanel = new JPanel();
@@ -88,6 +118,7 @@ class BarzahlungsWerkzeugUI
         buttonPanel.add(_dismissButton);
         buttonPanel.add(_okButton);
         dialog.add(buttonPanel);
+        buttonPanel.setBackground(backgroundColor);
 
         // Center on display
         dialog.setLocationRelativeTo(null);
@@ -132,6 +163,16 @@ class BarzahlungsWerkzeugUI
     }
 
     /**
+     * Gibt das bezahlterBetrag Label zurück
+     * @return Das bezahlte Betrag Label
+     */
+    JLabel getBezahlterbetragLabel()
+    {
+        return  _bezahlterbetragLabel;
+    }
+    
+   
+    /**
      * Gibt den OK-Button zurück
      * @return Der OK-Button
      */
@@ -157,5 +198,6 @@ class BarzahlungsWerkzeugUI
         _preisLabel.setText("");
         _inputFeld.setValue(null);
         _restbetragLabel.setText("");
+        _bezahlterbetragLabel.setText("");
     }
 }

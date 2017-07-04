@@ -65,6 +65,13 @@ public class GeldbetragTest
     }
 
     @Test
+    public void testSub ()
+    {
+        String expectedSum = "00,00";
+        assertEquals(_value1.sub(_value2).getString(), expectedSum);
+    }
+
+    @Test
     public void testMultiply ()
     {
         String expectedProduct = "00,40";

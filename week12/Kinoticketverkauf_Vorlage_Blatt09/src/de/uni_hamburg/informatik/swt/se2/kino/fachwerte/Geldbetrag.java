@@ -56,10 +56,13 @@ public final class Geldbetrag
         return _eurocent;
     }
 
-    public static Geldbetrag add (Geldbetrag geldbetrag)
+    public Geldbetrag add (Geldbetrag geldbetrag)
     {}
 
-    public static Geldbetrag multiply (int n)
+    public Geldbetrag sub (Geldbetrag geldbetrag)
+    {}
+
+    public Geldbetrag multiply (int n)
     {}
 
 }

@@ -48,20 +48,20 @@ public class GeldbetragTest
     }
 
     @Test
-    public void testToString()
+    public void testgetString()
     {
-        assertEquals(_expected, _value1.toString());
-        assertEquals(_expected, _value2.toString());
-        assertEquals(_expected, _value3.toString());
-        assertEquals(_expected, _value4.toString());
-        assertEquals(_expected, _value5.toString());
+        assertEquals(_expected, _value1.getString());
+        assertEquals(_expected, _value2.getString());
+        assertEquals(_expected, _value3.getString());
+        assertEquals(_expected, _value4.getString());
+        assertEquals(_expected, _value5.getString());
     }
 
     @Test
     public void testAdd ()
     {
         String expectedSum = "00,20";
-        assertEquals(_value1.add(_value2).toString(), expectedSum);
+        assertEquals(_value1.add(_value2).getString(), expectedSum);
     }
 
     @Test
@@ -74,6 +74,6 @@ public class GeldbetragTest
     public void testImmutability ()
     {
         _value1.add(_value2);
-        assertEquals(_value1.toString(), _expected);
+        assertEquals(_value1.getString(), _expected);
     }
 }

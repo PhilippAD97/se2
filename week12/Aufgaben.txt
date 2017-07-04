@@ -1,0 +1,12 @@
+9.1)
+	a) Fachwerte sind wertartige, fachlich motivierte Dinge. Laut den SE2-Entwurfsregeln sind Fachwerte folgendermaßen aufgebaut:
+		- Unveränderlicher Zustand
+		- Wertobjekte als Blätter im Objektbaum (keine Referenzen auf andere Objekte)
+		- Keine bestehenden Objekte verändern
+		- Erzeugung verbergen
+		- `equals` und `hashCode` implementieren
+		- Immer `equals` statt `==` zum Vergleich verwenden
+	b) Kassier muss nicht den bezahlten Betrag umrechnen.
+	c) Nein, wir erlauben keine negativen Werte. Das zur Folge, dass unser Rückgeld stets positiv ist.
+	d) siehe UML
+	e) siehe UML

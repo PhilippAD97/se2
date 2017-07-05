@@ -8,28 +8,18 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
-
 public class GeldbetragTest
 {
-    Geldbetrag _value1 = Geldbetrag.parse("00,10");
-    Geldbetrag _value2 = Geldbetrag.parse(",1");
-    Geldbetrag _value3 = Geldbetrag.parse("00,1");
-    Geldbetrag _value4 = Geldbetrag.parse(",10");
-    Geldbetrag _value5 = Geldbetrag.parse("0,1");
-    String _expected = "00,10";
+    private Geldbetrag _value1 = Geldbetrag.parse("00,10");
+    private Geldbetrag _value2 = Geldbetrag.parse(",1");
+    private Geldbetrag _value3 = Geldbetrag.parse("00,1");
+    private Geldbetrag _value4 = Geldbetrag.parse(",10");
+    private Geldbetrag _value5 = Geldbetrag.parse("0,1");
+    private Geldbetrag _valueMax = Geldbetrag.parse(Integer.MAX_VALUE);
+    private String _expected = "00,10";
 
     @Test
-    public void testParse () 
-    {
-        assertTrue(_value1.equals(_value2));
-        assertTrue(_value1.equals(_value3));
-        assertTrue(_value1.equals(_value4));
-        assertTrue(_value1.equals(_value5));
-    }
-
-    @Test
-    public void testIsValid ()
+    public void testIsValid()
     {
         assertTrue(Geldbetrag.isValid("00,10"));
         assertTrue(Geldbetrag.isValid(",1"));
@@ -39,16 +29,17 @@ public class GeldbetragTest
     }
 
     @Test
-    public void testEquals ()
+    public void testEquals()
     {
-        assertTrue(_value1.equals(_value2));
-        assertTrue(_value1.equals(_value3));
-        assertTrue(_value1.equals(_value4));
-        assertTrue(_value1.equals(_value5));
+        assertEquals(_value1, _value1);
+        assertEquals(_value1, _value2);
+        assertEquals(_value1, _value3);
+        assertEquals(_value1, _value4);
+        assertEquals(_value1, _value5);
     }
 
     @Test
-    public void testgetString()
+    public void testGetString()
     {
         assertEquals(_expected, _value1.getString());
         assertEquals(_expected, _value2.getString());
@@ -58,27 +49,33 @@ public class GeldbetragTest
     }
 
     @Test
-    public void testAdd ()
+    public void testAdd()
     {
-        String expectedSum = "00,20";
-        assertEquals(_value1.add(_value2).getString(), expectedSum);
+        String expectedSum1 = "00,20";
+        assertEquals(_value1.add(_value2).getString(), expectedSum1);
+
+        String expectedSum2 = Geldbetrag.parse(Integer.MAX_VALUE).getString();
+        assertEquals(_value1.add(_valueMax).getString(), expectedSum2);
     }
 
     @Test
-    public void testSub ()
+    public void testSub()
     {
         String expectedSum = "00,00";
         assertEquals(_value1.sub(_value2).getString(), expectedSum);
+
+        assertTrue(_value1.sub(Geldbetrag.parse(10)).getAsEurocent() > 0);
     }
 
     @Test
-    public void testMultiply ()
+    public void testMultiply()
     {
         String expectedProduct = "00,40";
-        assertEquals(_value1.multiply(4), expectedProduct);
+        assertEquals(_value1.multiply(4).getString(), expectedProduct);
     }
 
-    public void testImmutability ()
+    @Test
+    public void testImmutability()
     {
         _value1.add(_value2);
         assertEquals(_value1.getString(), _expected);

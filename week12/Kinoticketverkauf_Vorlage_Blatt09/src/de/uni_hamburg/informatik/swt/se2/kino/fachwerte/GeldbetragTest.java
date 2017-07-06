@@ -15,7 +15,7 @@ public class GeldbetragTest
     private Geldbetrag _value3 = Geldbetrag.parse("00,1");
     private Geldbetrag _value4 = Geldbetrag.parse(",10");
     private Geldbetrag _value5 = Geldbetrag.parse("0,1");
-    private Geldbetrag _valueMax = Geldbetrag.parse(Integer.MAX_VALUE);
+    private Geldbetrag _value6 = Geldbetrag.parse("10");
     private String _expected = "00,10";
 
     @Test
@@ -41,43 +41,40 @@ public class GeldbetragTest
     @Test
     public void testGetString()
     {
-        assertEquals(_expected, _value1.getString());
-        assertEquals(_expected, _value2.getString());
-        assertEquals(_expected, _value3.getString());
-        assertEquals(_expected, _value4.getString());
-        assertEquals(_expected, _value5.getString());
+        assertEquals(_value1.getString(), _expected);
+        assertEquals(_value2.getString(), _expected);
+        assertEquals(_value3.getString(), _expected);
+        assertEquals(_value4.getString(), _expected);
+        assertEquals(_value5.getString(), _expected);
     }
 
     @Test
     public void testAdd()
     {
         String expectedSum1 = "00,20";
-        assertEquals(_value1.add(_value2).getString(), expectedSum1);
-
-        String expectedSum2 = Geldbetrag.parse(Integer.MAX_VALUE).getString();
-        assertEquals(_value1.add(_valueMax).getString(), expectedSum2);
+        assertEquals(expectedSum1, _value1.add(_value2).getString());
     }
 
     @Test
     public void testSub()
     {
         String expectedSum = "00,00";
-        assertEquals(_value1.sub(_value2).getString(), expectedSum);
+        assertEquals(expectedSum, _value1.sub(_value2).getString());
 
-        assertTrue(_value1.sub(Geldbetrag.parse(10)).getAsEurocent() > 0);
+        assertEquals(990, _value6.sub(_value3).getAsEurocent());
     }
 
     @Test
     public void testMultiply()
     {
         String expectedProduct = "00,40";
-        assertEquals(_value1.multiply(4).getString(), expectedProduct);
+        assertEquals(expectedProduct, _value1.multiply(4).getString());
     }
 
     @Test
     public void testImmutability()
     {
         _value1.add(_value2);
-        assertEquals(_value1.getString(), _expected);
+        assertEquals(_expected, _value1.getString());
     }
 }

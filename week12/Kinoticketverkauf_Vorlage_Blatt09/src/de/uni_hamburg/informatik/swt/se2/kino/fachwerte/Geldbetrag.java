@@ -169,7 +169,7 @@ public final class Geldbetrag
         {
             return new Geldbetrag(Integer.MAX_VALUE);
         }
-        return new Geldbetrag(geldbetrag.getAsEurocent() + _eurocent);
+        return new Geldbetrag(_eurocent + geldbetrag.getAsEurocent());
     }
 
     /**
@@ -184,7 +184,7 @@ public final class Geldbetrag
     {
         assert isSubtractionPossible(
                 geldbetrag) : "Vorbedinung verletzt: isSubtractionPossible(geldbetrag)";
-        return new Geldbetrag(geldbetrag.getAsEurocent() - _eurocent);
+        return new Geldbetrag(_eurocent - geldbetrag.getAsEurocent());
     }
 
     /**
@@ -219,14 +219,16 @@ public final class Geldbetrag
      * Prüft, ob die Subtraktion möglich ist
      *
      * @param other             Der zu subtrahierdende Geldbetrag
-     * @return true, wenn Subtraktion mögllich ist, sonst false
+     * @return true, wenn Subtraktion möglich ist, sonst false
      */
     public boolean isSubtractionPossible(Geldbetrag other)
     {
         int otherEurocent = other.getAsEurocent();
-        return ((long) this._eurocent - (long) otherEurocent) >= 0
-                && ((long) this._eurocent - (long) otherEurocent)
+        boolean notNegative = (long) this._eurocent - (long) otherEurocent >= 0;
+        boolean noOverflow = ((long) this._eurocent - (long) otherEurocent)
                 > Integer.MIN_VALUE;
+
+        return notNegative && noOverflow;
     }
 
     /**

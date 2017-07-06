@@ -3,12 +3,19 @@ package de.uni_hamburg.informatik.swt.se2.kino.fachwerte;
 import java.lang.Integer;
 
 /**
- * Eurowert
+ * Ein Geldbetrag
+ *
+ * @author Fruchtzwerge
  */
 public final class Geldbetrag
 {
-    final int _eurocent;
+    private final int _eurocent;
 
+    /**
+     * Erzeugt einen neuen Geldbetrag
+     *
+     * @param eurocent          Der Betrag in Eurocent
+     */
     private Geldbetrag(int eurocent)
     {
         _eurocent = eurocent;
@@ -17,7 +24,7 @@ public final class Geldbetrag
     /**
      * Wählt einen Eurowert aus (eurostring).
      *
-     * @param eurostring Der Eurowert als String
+     * @param eurostring        Der Eurowert als String
      *
      * @require isValid(eurostring)
      */
@@ -38,7 +45,7 @@ public final class Geldbetrag
             euro = 0;
         }
 
-        // Wenn es Nachkommastellen gibt, versuche zu parsen
+        // Wenn es Nachkommastellen gibt, versuche sie zu parsen
         if (parts.length > 1)
         {
             try
@@ -64,7 +71,7 @@ public final class Geldbetrag
     /**
      * Wählt einen Eurowert aus (eurocent).
      *
-     * @param eurocent Der Eurocent-Wert als int
+     * @param eurocent          Der Eurocent-Wert als int
      *
      * @require isValid(eurocent)
      */
@@ -75,17 +82,30 @@ public final class Geldbetrag
         return new Geldbetrag(eurocent);
     }
 
+    /**
+     * Prüft, ob ein String ein valider Geldbetrag ist
+     *
+     * @param geldbetrag        Der zu prüfende String
+     * @return true, wenn es sich hierbei um einen gültigen Geldbetrag handelt, sonst false
+     */
     public static boolean isValid(String geldbetrag)
     {
         return geldbetrag.matches("^(\\d{1,2},\\d{1,2}|,\\d{1,2}|\\d{1,2})$");
     }
 
+    /**
+     * Prüft, ob ein Integer ein valider Geldbetrag ist
+     *
+     * @param geldbetrag        Der zu prüfende Integer
+     * @return true, wenn es sich hierbei um einen gültigen Geldbetrag handelt, sonst false
+     */
     public static boolean isValid(int geldbetrag)
     {
         return geldbetrag > 0;
     }
 
-    @Override public boolean equals(Object obj)
+    @Override
+    public boolean equals(Object obj)
     {
         // Typzusicherung
         if (obj instanceof Geldbetrag)
@@ -96,11 +116,16 @@ public final class Geldbetrag
         return false;
     }
 
-    @Override public int hashCode()
+    @Override
+    public int hashCode()
     {
         return _eurocent;
     }
 
+    /**
+     * Gibt den Geldbetrag als formatierten String der Form "EE.CC" zurück
+     * @return Der Geldbetrag als String
+     */
     public String getString()
     {
         // Zerofill Euro
@@ -120,30 +145,100 @@ public final class Geldbetrag
         return zeroFilledEuro + "," + zeroFilledCent;
     }
 
+    /**
+     * Gibt den Geldbetrag als Eurocent zurück
+     * @return Der Betrag in Eurocent
+     */
     public int getAsEurocent()
     {
         return _eurocent;
     }
 
+    /**
+     * Addiert einen Geldbetrag
+     *
+     * @param geldbetrag        Der zu addierende Geldbetrag
+     * @return Das Ergebnis der Addition
+     */
     public Geldbetrag add(Geldbetrag geldbetrag)
     {
-        // Return Max Integer, wenn einer der Summanden Max Integer ist
-        // TODO: glaube das macht so keinen Sinn
+        assert isAdditionPossible(
+                geldbetrag) : "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
         if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE
-                || _eurocent == Integer.MAX_VALUE) {
+                || _eurocent == Integer.MAX_VALUE)
+        {
             return new Geldbetrag(Integer.MAX_VALUE);
         }
         return new Geldbetrag(geldbetrag.getAsEurocent() + _eurocent);
     }
 
+    /**
+     * Subtrahiert einen Geldbetrag
+     *
+     * @param geldbetrag        Der zu subtrahierende Geldbetrag
+     * @return Das Ergebnis der Subtraktion
+     *
+     * @require isSubtractionPossible(geldbetrag)
+     */
     public Geldbetrag sub(Geldbetrag geldbetrag)
     {
+        assert isSubtractionPossible(
+                geldbetrag) : "Vorbedinung verletzt: isSubtractionPossible(geldbetrag)";
         return new Geldbetrag(geldbetrag.getAsEurocent() - _eurocent);
     }
 
+    /**
+     * Multipliziert mit einer natürlichen Zahl
+     *
+     * @param n                 Der Faktor
+     * @return Das Ergebnis der Multiplikation
+     *
+     * @require isMultiplicationPossible(n)
+     */
     public Geldbetrag multiply(int n)
     {
+        assert isMultiplicationPossible(
+                n) : "Vorbedinung verletzt: isMultiplicationPossible(n)";
         return new Geldbetrag(_eurocent * n);
+    }
+
+    /**
+     * Prüft, ob die Addition möglich ist
+     *
+     * @param other             Der zu addierende Geldbetrag
+     * @return true, wenn Addition möglich ist, sonst false
+     */
+    public boolean isAdditionPossible(Geldbetrag other)
+    {
+        int otherEurocent = other.getAsEurocent();
+        return ((long) this._eurocent + (long) otherEurocent)
+                < Integer.MAX_VALUE;
+    }
+
+    /**
+     * Prüft, ob die Subtraktion möglich ist
+     *
+     * @param other             Der zu subtrahierdende Geldbetrag
+     * @return true, wenn Subtraktion mögllich ist, sonst false
+     */
+    public boolean isSubtractionPossible(Geldbetrag other)
+    {
+        int otherEurocent = other.getAsEurocent();
+        return ((long) this._eurocent - (long) otherEurocent) >= 0
+                && ((long) this._eurocent - (long) otherEurocent)
+                > Integer.MIN_VALUE;
+    }
+
+    /**
+     * Prüft, ob Multiplikation möglich ist
+     *
+     * @param n                 Der Faktor
+     * @return true, wenn Multiplikation möglich ist, sonst false
+     */
+    public boolean isMultiplicationPossible(int n)
+    {
+        return n > 0 && ((long) this._eurocent * (long) n) < Integer.MAX_VALUE
+                && ((long) this._eurocent * (long) n) > Integer.MIN_VALUE;
     }
 
 }

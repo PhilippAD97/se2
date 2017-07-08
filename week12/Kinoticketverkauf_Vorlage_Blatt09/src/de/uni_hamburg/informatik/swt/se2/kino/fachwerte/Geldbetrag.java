@@ -10,6 +10,7 @@ import java.lang.Integer;
 public final class Geldbetrag
 {
     private final int _eurocent;
+    private static final String _currency = "€";
 
     /**
      * Erzeugt einen neuen Geldbetrag
@@ -101,7 +102,7 @@ public final class Geldbetrag
      */
     public static boolean isValid(int geldbetrag)
     {
-        return geldbetrag > 0;
+        return geldbetrag >= 0;
     }
 
     @Override
@@ -197,8 +198,7 @@ public final class Geldbetrag
      */
     public Geldbetrag multiply(int n)
     {
-        assert isMultiplicationPossible(
-                n) : "Vorbedinung verletzt: isMultiplicationPossible(n)";
+        assert isMultiplicationPossible(n) : "Vorbedinung verletzt: isMultiplicationPossible(n)";
         return new Geldbetrag(_eurocent * n);
     }
 
@@ -223,6 +223,7 @@ public final class Geldbetrag
      */
     public boolean isSubtractionPossible(Geldbetrag other)
     {
+        // TODO: check if we should allow negative values
         int otherEurocent = other.getAsEurocent();
         boolean notNegative = (long) this._eurocent - (long) otherEurocent >= 0;
         boolean noOverflow = ((long) this._eurocent - (long) otherEurocent)
@@ -239,8 +240,17 @@ public final class Geldbetrag
      */
     public boolean isMultiplicationPossible(int n)
     {
-        return n > 0 && ((long) this._eurocent * (long) n) < Integer.MAX_VALUE
+        return n >= 0 && ((long) this._eurocent * (long) n) < Integer.MAX_VALUE
                 && ((long) this._eurocent * (long) n) > Integer.MIN_VALUE;
+    }
+
+    /**
+     * Gibt das Währungszeichen zurück
+     * @return Das Währungszeichen
+     */
+    public static String getCurrency()
+    {
+        return _currency;
     }
 
 }

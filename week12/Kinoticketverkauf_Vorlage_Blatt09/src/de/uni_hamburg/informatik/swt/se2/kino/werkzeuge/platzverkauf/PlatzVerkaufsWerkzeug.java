@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
+import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Platz;
 import de.uni_hamburg.informatik.swt.se2.kino.materialien.Kinosaal;
 import de.uni_hamburg.informatik.swt.se2.kino.materialien.Vorstellung;
@@ -16,15 +17,15 @@ import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.barzahlung.BarzahlungsWe
  * Mit diesem Werkzeug können Plätze verkauft und storniert werden. Es arbeitet
  * auf einer Vorstellung als Material. Mit ihm kann angezeigt werden, welche
  * Plätze schon verkauft und welche noch frei sind.
- * 
+ *
  * Dieses Werkzeug ist ein eingebettetes Subwerkzeug.
- * 
+ *
  * @author SE2-Team
  * @version SoSe 2017
  */
 public class PlatzVerkaufsWerkzeug
 {
-    private int _ausgewaehlterGesamtbetrag;
+    private Geldbetrag _ausgewaehlterGesamtbetrag;
     // Die aktuelle Vorstellung, deren Plätze angezeigt werden. Kann null sein.
     private Vorstellung _vorstellung;
 
@@ -48,7 +49,7 @@ public class PlatzVerkaufsWerkzeug
     /**
      * Gibt das Panel dieses Subwerkzeugs zurück. Das Panel sollte von einem
      * Kontextwerkzeug eingebettet werden.
-     * 
+     *
      * @ensure result != null
      */
     public JPanel getUIPanel()
@@ -106,7 +107,7 @@ public class PlatzVerkaufsWerkzeug
     /**
      * Reagiert darauf, dass sich die Menge der ausgewählten Plätze geändert
      * hat.
-     * 
+     *
      * @param plaetze die jetzt ausgewählten Plätze.
      */
     private void reagiereAufNeuePlatzAuswahl(Set<Platz> plaetze)
@@ -122,29 +123,27 @@ public class PlatzVerkaufsWerkzeug
     private void aktualisierePreisanzeige(Set<Platz> plaetze)
     {
         // TODO: replace preis
-        _ausgewaehlterGesamtbetrag = 0;
+        _ausgewaehlterGesamtbetrag = Geldbetrag.parse(0);
         if (istVerkaufenMoeglich(plaetze))
         {
-            int preis = _vorstellung.getPreisFuerPlaetze(plaetze);
+            Geldbetrag preis = _vorstellung.getPreisFuerPlaetze(plaetze);
             _ui.getPreisLabel().setText(
-                    "Gesamtpreis: " + preis + " Eurocent");
+                    "Gesamtpreis: " + preis.getString() + " " + Geldbetrag.getCurrency());
             _ausgewaehlterGesamtbetrag = preis;
         }
         else if (istStornierenMoeglich(plaetze))
         {
-            int preis = _vorstellung.getPreisFuerPlaetze(plaetze);
+            Geldbetrag preis = _vorstellung.getPreisFuerPlaetze(plaetze);
             _ui.getPreisLabel().setText(
-                    "Gesamtstorno: " + preis + " Eurocent");
+                    "Gesamtstorno: " + preis.getString() + " " + Geldbetrag.getCurrency());
         }
         else if (!plaetze.isEmpty())
         {
-            _ui.getPreisLabel().setText(
-                    "Verkauf und Storno nicht gleichzeitig möglich!");
+            _ui.getPreisLabel().setText("Verkauf und Storno nicht gleichzeitig möglich!");
         }
         else
         {
-            _ui.getPreisLabel().setText(
-                    "Gesamtpreis: 0 Eurocent");
+            _ui.getPreisLabel().setText("Gesamtpreis: " + Geldbetrag.parse(0).getString() + " " + Geldbetrag.getCurrency());
         }
     }
 
@@ -195,8 +194,9 @@ public class PlatzVerkaufsWerkzeug
 
     /**
      * Setzt am Platzplan die Anzahl der Reihen und der Sitze.
-     * 
-     * @param saal Ein Saal mit dem der Platzplan initialisiert wird.
+     *
+     * @param reihen                die Anzahl der Reihen
+     * @param sitzeProReihe         die Anzahl der Plätze pro Reihe
      */
     private void initialisierePlatzplan(int reihen, int sitzeProReihe)
     {
@@ -205,7 +205,7 @@ public class PlatzVerkaufsWerkzeug
 
     /**
      * Markiert alle nicht verkaufbaren Plätze im Platzplan als verkauft.
-     * 
+     *
      * @param plaetze Eine Liste mit allen Plaetzen im Saal.
      */
     private void markiereNichtVerkaufbarePlaetze(List<Platz> plaetze)

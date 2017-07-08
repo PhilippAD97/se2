@@ -8,23 +8,24 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.ObservableSubwerkzeug;
+import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
 
 /**
  * Das Barzahlungswerkzeug behandelt die Kasseneingabe. Es ermöglicht die
  * Eingabe eines gezahlten Betrags und ermittelt automatisch den Restbetrag zur
  * Unterstützung des Verkaufs.
- * 
+ *
  * Wurde die Bezahlung erfolgreich abgeschlossen, kann dieser Status abgefragt
  * werden. Bei einer erneuten Durchführung einer Bezahlung wird dieser
  * Werkzeugstatus zu Beginn wieder auf nicht erfolgreich (false) gesetzt.
- * 
+ *
  * Das Beenden des Bezahlvorgangs (OK oder Abbrechen) führt zu einer
  * Benachrichtigung aller Beobachter, die danach den Status abfragen können.
- * 
+ *
  * Das Werkzeug arbeitet mit einem modalen Dialog, d. h. der Programmfluss
  * bleibt in diesem Werkzeug und wird erst nach dem Beenden an den Aufrufer
  * zurückgegeben.
- * 
+ *
  * @author SE2-Team
  * @version SoSe 2017
  */
@@ -33,14 +34,14 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     private BarzahlungsWerkzeugUI _ui;
     // TODO: replace preis
-    private int _preis;
+    private Geldbetrag _preis;
     private boolean _barzahlungErfolgreich;
     private boolean _ausreichenderGeldbetrag;
 
     /**
      * Initialisiert das Werkzeug. Die Aktivierung erfolgt über eine sparate
      * Methode.
-     * 
+     *
      */
     public BarzahlungsWerkzeug()
     {
@@ -51,10 +52,10 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
     /**
      * Startet den Barzahlungsvorgang. Die UI wird angezeigt. Der Programmfluss
      * kehrt erst nach dem Beenden des Bezahlvorgangs an den Aufrufer zurück.
-     * 
+     *
      * @param preis der einzunehmende Gelbetrag
      */
-    public void fuehreBarzahlungDurch(int preis)
+    public void fuehreBarzahlungDurch(Geldbetrag preis)
     {
         _preis = preis;
         _ausreichenderGeldbetrag = false;
@@ -156,7 +157,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      * und beendet das Bezahlen erfoglreich, sollte der Preis gedeckt und die
      * Entertaste gedrückt worden sein. Die Esc-Taste beendet den Bezahlvorgang
      * erfolglos.
-     * 
+     *
      * @param eingabePreis der bisher eingegebene Preis
      */
     private void reagiereAufEingabeText(String eingabePreis)
@@ -165,18 +166,20 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
         {
             eingabePreis = "0";
         }
-        try
+
+        if (Geldbetrag.isValid(eingabePreis))
         {
-            int eingabeBetrag = Integer.parseInt(eingabePreis);
-            _ausreichenderGeldbetrag = (eingabeBetrag >= _preis);
-            int differenz = Math.abs(eingabeBetrag - _preis);
+            Geldbetrag eingabeBetrag = Geldbetrag.parse(eingabePreis);
+            _ausreichenderGeldbetrag = (eingabeBetrag.getAsEurocent() >= _preis.getAsEurocent());
+            Geldbetrag differenz = eingabeBetrag.sub(_preis);
             zeigeRestbetrag(differenz);
         }
-        catch (NumberFormatException ignore)
+        else
         {
             _ausreichenderGeldbetrag = false;
             zeigeFehlertext();
         }
+
         zeigeAusreichenderGeldbetragStatus();
     }
 
@@ -220,7 +223,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
     /**
      * Setzt die Statusanzeige der Gegeben- und Rückgabe-Textfelder abhängig
      * davon, ob ein ausreichender Geldbetrag gegeben wurde.
-     * 
+     *
      */
     private void zeigeAusreichenderGeldbetragStatus()
     {
@@ -231,9 +234,6 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     /**
      * Setzt die Fehlerstatusanzeige der Gegeben- und Rückgabe-Textfelder.
-     * 
-     * @param fehler true, wenn die Felder als fehlerhaft markiert werden
-     *            sollen, sonst false.
      */
     private void zeigeFehlertext()
     {
@@ -242,12 +242,12 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     /**
      * Setzt eine übergebene Differenz im Restbetrag-Textfeld
-     * 
+     *
      * @param differenz ein eingegebener Betrag
      */
-    private void zeigeRestbetrag(int differenz)
+    private void zeigeRestbetrag(Geldbetrag differenz)
     {
-        _ui.getRestbetragTextfield().setText(differenz + " Eurocent");
+        _ui.getRestbetragTextfield().setText(differenz.getString() + " " + Geldbetrag.getCurrency());
     }
 
     /**
@@ -255,6 +255,6 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void zeigePreis()
     {
-        _ui.getPreisTextfield().setText(_preis + " Eurocent");
+        _ui.getPreisTextfield().setText(_preis.getString() + " " + Geldbetrag.getCurrency());
     }
 }

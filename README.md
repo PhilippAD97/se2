@@ -1,6 +1,7 @@
 ## Softwareentwicklung 2
 
-Aufgaben inklusive Aufgabenblatt sortiert nach Woche
+Aufgaben inklusive Aufgabenblatt sortiert nach Woche.
+Ab Woche 06 strecken sich die Aufgabenzettel über 2 Wochen.
 
 ## Things to consider working with this library NOT using eclipse 😁
 

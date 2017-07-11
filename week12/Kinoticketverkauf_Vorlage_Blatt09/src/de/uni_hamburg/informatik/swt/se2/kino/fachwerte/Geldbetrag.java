@@ -126,7 +126,8 @@ public final class Geldbetrag
 
     /**
      * Fülle Beträge kleiner 10 mit einer führenden 0 auf.
-     * @return Zahl als String
+     * @param  number Zu füllende Zahl
+     * @return        Zahl als String
      */
     private String zeroFill(int number)
     {
@@ -180,8 +181,8 @@ public final class Geldbetrag
     /**
      * Subtrahiert einen Geldbetrag
      *
-     * @param geldbetrag        Der zu subtrahierende Geldbetrag
-     * @return Das Ergebnis der Subtraktion
+     * @param  geldbetrag Der zu subtrahierende Geldbetrag
+     * @return            Das Ergebnis der Subtraktion
      *
      * @require isSubtractionPossible(geldbetrag)
      */
@@ -195,8 +196,8 @@ public final class Geldbetrag
     /**
      * Multipliziert mit einer natürlichen Zahl
      *
-     * @param n                 Der Faktor
-     * @return Das Ergebnis der Multiplikation
+     * @param  n Der Faktor
+     * @return   Das Ergebnis der Multiplikation
      *
      * @require isMultiplicationPossible(n)
      */
@@ -210,8 +211,8 @@ public final class Geldbetrag
     /**
      * Prüft, ob die Addition möglich ist
      *
-     * @param other             Der zu addierende Geldbetrag
-     * @return true, wenn Addition möglich ist, sonst false
+     * @param  compare Der zu addierende Geldbetrag
+     * @return         true, wenn Addition möglich ist, sonst false
      */
     public boolean isAdditionPossible(Geldbetrag other)
     {
@@ -223,8 +224,8 @@ public final class Geldbetrag
     /**
      * Prüft, ob die Subtraktion möglich ist
      *
-     * @param other             Der zu subtrahierdende Geldbetrag
-     * @return true, wenn Subtraktion möglich ist, sonst false
+     * @param  compare Der zu subtrahierdende Geldbetrag
+     * @return         true, wenn Subtraktion möglich ist, sonst false
      */
     public boolean isSubtractionPossible(Geldbetrag other)
     {
@@ -239,8 +240,8 @@ public final class Geldbetrag
     /**
      * Prüft, ob Multiplikation möglich ist
      *
-     * @param n                 Der Faktor
-     * @return true, wenn Multiplikation möglich ist, sonst false
+     * @param  n Der Faktor
+     * @return   true, wenn Multiplikation möglich ist, sonst false
      */
     public boolean isMultiplicationPossible(int n)
     {
@@ -259,12 +260,12 @@ public final class Geldbetrag
 
     /**
      * Gibt die Differenz zwischen zwei Geldbeträgen zurück (immer positiv!)
-     * @param other             Der andere Geldbetrag
-     * @return Einen neuen Geldbetrag, der die Differenz angibt
+     * @param  compare Der andere Geldbetrag
+     * @return         Einen neuen Geldbetrag, der die Differenz angibt
      */
-    public Geldbetrag difference(Geldbetrag other)
+    public Geldbetrag difference(Geldbetrag compare)
     {
-        return parse(Math.abs(_eurocent - other.getAsEurocent()));
+        return parse(Math.abs(_eurocent - compare.getAsEurocent()));
     }
 
 }

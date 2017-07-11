@@ -192,7 +192,7 @@ public final class Geldbetrag
     /**
      * Prüft, ob die Addition möglich ist
      *
-     * @param  compare Der zu addierende Geldbetrag
+     * @param  other Der zu addierende Geldbetrag
      * @return         true, wenn Addition möglich ist, sonst false
      */
     public boolean isAdditionPossible(Geldbetrag other)
@@ -205,7 +205,7 @@ public final class Geldbetrag
     /**
      * Prüft, ob die Subtraktion möglich ist
      *
-     * @param  compare Der zu subtrahierdende Geldbetrag
+     * @param  other Der zu subtrahierdende Geldbetrag
      * @return         true, wenn Subtraktion möglich ist, sonst false
      */
     public boolean isSubtractionPossible(Geldbetrag other)

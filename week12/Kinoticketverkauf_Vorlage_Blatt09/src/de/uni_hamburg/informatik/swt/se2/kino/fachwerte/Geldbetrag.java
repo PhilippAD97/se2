@@ -92,7 +92,7 @@ public final class Geldbetrag
      */
     public static boolean isValid(String geldbetrag)
     {
-        return geldbetrag.matches("^(\\d{1,2},\\d{1,2}|,\\d{1,2}|\\d{1,2})$");
+        return geldbetrag.matches("^(\\d+,\\d{1,2}|,\\d{1,2}|\\d+)$");
     }
 
     /**

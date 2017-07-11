@@ -112,7 +112,7 @@ public final class Geldbetrag
         if (obj instanceof Geldbetrag)
         {
             Geldbetrag geldbetrag = (Geldbetrag) obj;
-            return geldbetrag.getString().equals(this.getString());
+            return geldbetrag.hashCode() == this.hashCode();
         }
         return false;
     }

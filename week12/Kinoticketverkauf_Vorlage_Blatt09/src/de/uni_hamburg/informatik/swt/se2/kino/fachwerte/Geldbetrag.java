@@ -146,9 +146,6 @@ public final class Geldbetrag
         return zeroFilledEuro + "," + zeroFilledCent;
     }
     
-    
-    
-
     /**
      * Gibt den Geldbetrag als Eurocent zurück
      * @return Der Betrag in Eurocent

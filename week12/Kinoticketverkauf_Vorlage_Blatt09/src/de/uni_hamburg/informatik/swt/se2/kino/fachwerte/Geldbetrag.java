@@ -163,8 +163,8 @@ public final class Geldbetrag
      */
     public Geldbetrag add(Geldbetrag geldbetrag)
     {
-        assert isAdditionPossible(
-                geldbetrag) : "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
+        assert isAdditionPossible(geldbetrag) :
+            "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
         if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE
                 || _eurocent == Integer.MAX_VALUE)
         {
@@ -183,8 +183,8 @@ public final class Geldbetrag
      */
     public Geldbetrag sub(Geldbetrag geldbetrag)
     {
-        assert isSubtractionPossible(
-                geldbetrag) : "Vorbedinung verletzt: isSubtractionPossible(geldbetrag)";
+        assert isSubtractionPossible(geldbetrag) :
+            "Vorbedinung verletzt: isSubtractionPossible(geldbetrag)";
         return new Geldbetrag(_eurocent - geldbetrag.getAsEurocent());
     }
 
@@ -198,7 +198,8 @@ public final class Geldbetrag
      */
     public Geldbetrag multiply(int n)
     {
-        assert isMultiplicationPossible(n) : "Vorbedinung verletzt: isMultiplicationPossible(n)";
+        assert isMultiplicationPossible(n) :
+            "Vorbedinung verletzt: isMultiplicationPossible(n)";
         return new Geldbetrag(_eurocent * n);
     }
 
@@ -223,11 +224,10 @@ public final class Geldbetrag
      */
     public boolean isSubtractionPossible(Geldbetrag other)
     {
-        // TODO: check if we should allow negative values
         int otherEurocent = other.getAsEurocent();
-        boolean notNegative = (long) this._eurocent - (long) otherEurocent >= 0;
-        boolean noOverflow = ((long) this._eurocent - (long) otherEurocent)
-                > Integer.MIN_VALUE;
+        long newValue = (long) this._eurocent - (long) otherEurocent;
+        boolean notNegative = newValue >= 0;
+        boolean noOverflow = newValue > Integer.MIN_VALUE;
 
         return notNegative && noOverflow;
     }
@@ -240,8 +240,8 @@ public final class Geldbetrag
      */
     public boolean isMultiplicationPossible(int n)
     {
-        return n >= 0 && ((long) this._eurocent * (long) n) < Integer.MAX_VALUE
-                && ((long) this._eurocent * (long) n) > Integer.MIN_VALUE;
+        long newValue = (long) this._eurocent * (long) n;
+        return newValue >= 0 && newValue < Integer.MAX_VALUE;
     }
 
     /**

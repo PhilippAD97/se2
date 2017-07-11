@@ -253,4 +253,14 @@ public final class Geldbetrag
         return _currency;
     }
 
+    /**
+     * Gibt die Differenz zwischen zwei Geldbeträgen zurück (immer positiv!)
+     * @param other             Der andere Geldbetrag
+     * @return Einen neuen Geldbetrag, der die Differenz angibt
+     */
+    public Geldbetrag difference(Geldbetrag other)
+    {
+        return parse(Math.abs(_eurocent - other.getAsEurocent()));
+    }
+
 }

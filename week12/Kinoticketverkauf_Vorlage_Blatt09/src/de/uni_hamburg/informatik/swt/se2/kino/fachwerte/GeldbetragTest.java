@@ -41,11 +41,14 @@ public class GeldbetragTest
     @Test
     public void testGetString()
     {
-        assertEquals(_value1.getString(), _expected);
-        assertEquals(_value2.getString(), _expected);
-        assertEquals(_value3.getString(), _expected);
-        assertEquals(_value4.getString(), _expected);
-        assertEquals(_value5.getString(), _expected);
+        assertEquals(_expected, _value1.getString());
+        assertEquals(_expected, _value2.getString());
+        assertEquals(_expected, _value3.getString());
+        assertEquals(_expected, _value4.getString());
+        assertEquals(_expected, _value5.getString());
+
+        Geldbetrag foo = Geldbetrag.parse(10);
+        assertEquals(_expected, foo.getString());
     }
 
     @Test

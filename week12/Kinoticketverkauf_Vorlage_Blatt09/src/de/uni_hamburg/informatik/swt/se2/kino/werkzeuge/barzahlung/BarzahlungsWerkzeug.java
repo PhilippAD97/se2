@@ -171,7 +171,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
         {
             Geldbetrag eingabeBetrag = Geldbetrag.parse(eingabePreis);
             _ausreichenderGeldbetrag = (eingabeBetrag.getAsEurocent() >= _preis.getAsEurocent());
-            Geldbetrag differenz = eingabeBetrag.sub(_preis);
+            Geldbetrag differenz = _preis.difference(eingabeBetrag);
             zeigeRestbetrag(differenz);
         }
         else

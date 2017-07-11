@@ -112,7 +112,7 @@ public final class Geldbetrag
         if (obj instanceof Geldbetrag)
         {
             Geldbetrag geldbetrag = (Geldbetrag) obj;
-            return geldbetrag.getString().equals(this.getString());
+            return geldbetrag.hashCode() == this.hashCode();
         }
         return false;
     }
@@ -259,6 +259,16 @@ public final class Geldbetrag
     public static String getCurrency()
     {
         return _currency;
+    }
+
+    /**
+     * Gibt die Differenz zwischen zwei Geldbeträgen zurück (immer positiv!)
+     * @param other             Der andere Geldbetrag
+     * @return Einen neuen Geldbetrag, der die Differenz angibt
+     */
+    public Geldbetrag difference(Geldbetrag other)
+    {
+        return parse(Math.abs(_eurocent - other.getAsEurocent()));
     }
 
 }

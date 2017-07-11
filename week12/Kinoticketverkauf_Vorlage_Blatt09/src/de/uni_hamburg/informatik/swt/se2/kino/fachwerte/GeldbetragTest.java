@@ -75,6 +75,19 @@ public class GeldbetragTest
     }
 
     @Test
+    public void testDifference()
+    {
+    	Geldbetrag value1 = Geldbetrag.parse(1000);
+    	Geldbetrag value2 = Geldbetrag.parse(10000);
+    	Geldbetrag value3 = Geldbetrag.parse(1100);
+
+    	assertEquals(value1.difference(value2), Geldbetrag.parse(9000));
+    	assertEquals(value1.difference(value3), Geldbetrag.parse(100));
+    	assertEquals(value3.difference(value1), Geldbetrag.parse(100));
+    	assertEquals(value3.difference(value2), Geldbetrag.parse(8900));
+    }
+    
+    @Test
     public void testImmutability()
     {
         _value1.add(_value2);

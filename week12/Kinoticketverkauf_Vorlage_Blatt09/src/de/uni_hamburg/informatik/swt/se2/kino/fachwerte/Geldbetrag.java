@@ -174,20 +174,8 @@ public final class Geldbetrag
      */
     public Geldbetrag add(Geldbetrag geldbetrag)
     {
-        assert isAdditionPossible(geldbetrag) :
-            "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
-        
+        assert isAdditionPossible(geldbetrag) : "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
 
-        if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE ||
-            _eurocent == Integer.MAX_VALUE
-        )
-
-        if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE ||
-            _eurocent == Integer.MAX_VALUE
-        )
-        {
-            return new Geldbetrag(Integer.MAX_VALUE);
-        }
         return new Geldbetrag(_eurocent + geldbetrag.getAsEurocent());
     }
 

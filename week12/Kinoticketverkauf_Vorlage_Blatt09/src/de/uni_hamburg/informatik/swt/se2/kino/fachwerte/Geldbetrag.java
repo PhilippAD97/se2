@@ -35,7 +35,7 @@ public final class Geldbetrag
             "Vorbedingung verletzt: isValid(eurostring)";
 
         String[] parts = eurostring.split(",");
-        int euro;
+        int euro = 0;
         int cent = 0;
 
         try
@@ -44,7 +44,7 @@ public final class Geldbetrag
         }
         catch (NumberFormatException e)
         {
-            euro = 0;
+            System.out.println("Warning: Could not parse to int, assuming 0");
         }
 
         // Wenn es Nachkommastellen gibt, versuche sie zu parsen
@@ -53,18 +53,19 @@ public final class Geldbetrag
             try
             {
                 cent = Integer.parseInt(parts[1]);
-
-                // Wenn es nur 1 Nachkommastelle gab, muss cent * 10 gerechnet werden
-                if (parts[1].length() < 2)
-                {
-                    cent *= 10;
-                }
             }
             catch (NumberFormatException e)
             {
-                cent = 0;
+                System.out.println("Warning: Could not parse to int, assuming 0");
+            }
+
+            // Wenn es nur 1 Nachkommastelle gab, muss cent * 10 gerechnet werden
+            if (parts[1].length() == 1)
+            {
+                cent *= 10;
             }
         }
+
 
         int totalCent = euro * 100 + cent;
         return new Geldbetrag(totalCent);
@@ -73,7 +74,7 @@ public final class Geldbetrag
     /**
      * Wählt einen Eurowert aus (eurocent).
      *
-     * @param eurocent          Der Eurocent-Wert als int
+     * @param eurocent Der Eurocent-Wert als int
      *
      * @require isValid(eurocent)
      */
@@ -87,8 +88,8 @@ public final class Geldbetrag
     /**
      * Prüft, ob ein String ein valider Geldbetrag ist
      *
-     * @param geldbetrag        Der zu prüfende String
-     * @return true, wenn es sich hierbei um einen gültigen Geldbetrag handelt, sonst false
+     * @param  geldbetrag Der zu prüfende String
+     * @return            true, wenn es sich hierbei um einen gültigen Geldbetrag handelt, sonst false
      */
     public static boolean isValid(String geldbetrag)
     {

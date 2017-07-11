@@ -31,12 +31,13 @@ public final class Geldbetrag
      */
     public static Geldbetrag parse(String eurostring)
     {
-        assert isValid(
-                eurostring) : "Vorbedingung verletzt: isValid(eurostring)";
+        assert isValid(eurostring) :
+            "Vorbedingung verletzt: isValid(eurostring)";
 
         String[] parts = eurostring.split(",");
         int euro;
         int cent = 0;
+
         try
         {
             euro = Integer.parseInt(parts[0]);
@@ -47,7 +48,7 @@ public final class Geldbetrag
         }
 
         // Wenn es Nachkommastellen gibt, versuche sie zu parsen
-        if (parts.length > 1)
+        if (parts.length > 1 && parts[1] != null)
         {
             try
             {
@@ -102,7 +103,7 @@ public final class Geldbetrag
      */
     public static boolean isValid(int geldbetrag)
     {
-        return geldbetrag >= 0 && geldbetrag < 10000;
+        return geldbetrag >= 0;
     }
 
     @Override
@@ -124,28 +125,36 @@ public final class Geldbetrag
     }
 
     /**
+     * Fülle Beträge kleiner 10 mit einer führenden 0 auf.
+     * @return Zahl als String
+     */
+    private String zeroFill(int number)
+    {
+        if (number < 10) {
+            return "0" + number;
+        }
+
+        return "" + number;
+    }
+
+    /**
      * Gibt den Geldbetrag als formatierten String der Form "EE.CC" zurück
      * @return Der Geldbetrag als String
      */
     public String getString()
     {
+        int cent = _eurocent % 100;
+        int euro = (_eurocent - cent) / 100;
+
         // Zerofill Euro
-        String zeroFilledEuro = "" + _eurocent / 100;
-        if (zeroFilledEuro.length() < 2)
-        {
-            zeroFilledEuro = "0" + zeroFilledEuro;
-        }
+        String zeroFilledEuro = zeroFill(euro);
 
         // Zerofill Cent
-        String zeroFilledCent = "" + _eurocent % 100;
-        if (zeroFilledCent.length() < 2)
-        {
-            zeroFilledCent = zeroFilledCent + "0";
-        }
+        String zeroFilledCent = zeroFill(cent);
 
         return zeroFilledEuro + "," + zeroFilledCent;
     }
-    
+
     /**
      * Gibt den Geldbetrag als Eurocent zurück
      * @return Der Betrag in Eurocent
@@ -166,6 +175,17 @@ public final class Geldbetrag
         assert isAdditionPossible(geldbetrag) :
             "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
         
+
+        if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE ||
+            _eurocent == Integer.MAX_VALUE
+        )
+
+        if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE ||
+            _eurocent == Integer.MAX_VALUE
+        )
+        {
+            return new Geldbetrag(Integer.MAX_VALUE);
+        }
         return new Geldbetrag(_eurocent + geldbetrag.getAsEurocent());
     }
 

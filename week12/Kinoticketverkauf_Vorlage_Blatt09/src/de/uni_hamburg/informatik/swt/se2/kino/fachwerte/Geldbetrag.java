@@ -102,7 +102,7 @@ public final class Geldbetrag
      */
     public static boolean isValid(int geldbetrag)
     {
-        return geldbetrag >= 0;
+        return geldbetrag >= 0 && geldbetrag < 10000;
     }
 
     @Override
@@ -145,6 +145,9 @@ public final class Geldbetrag
 
         return zeroFilledEuro + "," + zeroFilledCent;
     }
+    
+    
+    
 
     /**
      * Gibt den Geldbetrag als Eurocent zurück
@@ -165,11 +168,7 @@ public final class Geldbetrag
     {
         assert isAdditionPossible(geldbetrag) :
             "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
-        if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE
-                || _eurocent == Integer.MAX_VALUE)
-        {
-            return new Geldbetrag(Integer.MAX_VALUE);
-        }
+        
         return new Geldbetrag(_eurocent + geldbetrag.getAsEurocent());
     }
 

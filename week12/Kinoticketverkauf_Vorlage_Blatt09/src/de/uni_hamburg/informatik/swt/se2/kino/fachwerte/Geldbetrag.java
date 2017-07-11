@@ -175,6 +175,11 @@ public final class Geldbetrag
     {
         assert isAdditionPossible(geldbetrag) :
             "Vorbedinung verletzt: isAdditionPossible(geldbetrag)";
+        
+
+        if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE ||
+            _eurocent == Integer.MAX_VALUE
+        )
 
         if (geldbetrag.getAsEurocent() == Integer.MAX_VALUE ||
             _eurocent == Integer.MAX_VALUE
@@ -197,7 +202,6 @@ public final class Geldbetrag
     {
         assert isSubtractionPossible(geldbetrag) :
             "Vorbedinung verletzt: isSubtractionPossible(geldbetrag)";
-
         return new Geldbetrag(_eurocent - geldbetrag.getAsEurocent());
     }
 
@@ -213,7 +217,6 @@ public final class Geldbetrag
     {
         assert isMultiplicationPossible(n) :
             "Vorbedinung verletzt: isMultiplicationPossible(n)";
-
         return new Geldbetrag(_eurocent * n);
     }
 
@@ -223,11 +226,10 @@ public final class Geldbetrag
      * @param  compare Der zu addierende Geldbetrag
      * @return         true, wenn Addition möglich ist, sonst false
      */
-    public boolean isAdditionPossible(Geldbetrag compare)
+    public boolean isAdditionPossible(Geldbetrag other)
     {
-        int compareEurocent = compare.getAsEurocent();
-
-        return ((long) this._eurocent + (long) compareEurocent)
+        int otherEurocent = other.getAsEurocent();
+        return ((long) this._eurocent + (long) otherEurocent)
                 < Integer.MAX_VALUE;
     }
 
@@ -237,10 +239,10 @@ public final class Geldbetrag
      * @param  compare Der zu subtrahierdende Geldbetrag
      * @return         true, wenn Subtraktion möglich ist, sonst false
      */
-    public boolean isSubtractionPossible(Geldbetrag compare)
+    public boolean isSubtractionPossible(Geldbetrag other)
     {
-        int compareEurocent = compare.getAsEurocent();
-        long newValue = (long) this._eurocent - (long) compareEurocent;
+        int otherEurocent = other.getAsEurocent();
+        long newValue = (long) this._eurocent - (long) otherEurocent;
         boolean notNegative = newValue >= 0;
         boolean noOverflow = newValue > Integer.MIN_VALUE;
 

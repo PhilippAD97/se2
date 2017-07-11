@@ -44,7 +44,7 @@ public final class Geldbetrag
         }
         catch (NumberFormatException e)
         {
-            System.out.println("Warning: Could not parse to int, assuming 0");
+            System.out.println("Warning: Could not parse to int, assuming 0, was \"" + parts[0] + "\"");
         }
 
         // Wenn es Nachkommastellen gibt, versuche sie zu parsen
@@ -56,7 +56,7 @@ public final class Geldbetrag
             }
             catch (NumberFormatException e)
             {
-                System.out.println("Warning: Could not parse to int, assuming 0");
+                System.out.println("Warning: Could not parse to int, assuming 0, was \"" + parts[1] + "\"");
             }
 
             // Wenn es nur 1 Nachkommastelle gab, muss cent * 10 gerechnet werden
@@ -93,7 +93,7 @@ public final class Geldbetrag
      */
     public static boolean isValid(String geldbetrag)
     {
-        return geldbetrag.matches("^(\\d+,\\d{1,2}|,\\d{1,2}|\\d+)$");
+        return geldbetrag.matches("^(\\d+,\\d{1,2}|\\d+,|,\\d{1,2}|\\d+)$");
     }
 
     /**

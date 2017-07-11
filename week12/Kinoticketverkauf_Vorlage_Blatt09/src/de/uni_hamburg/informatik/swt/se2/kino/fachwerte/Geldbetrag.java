@@ -126,20 +126,6 @@ public final class Geldbetrag
     }
 
     /**
-     * Fülle Beträge kleiner 10 mit einer führenden 0 auf.
-     * @param  number Zu füllende Zahl
-     * @return        Zahl als String
-     */
-    private String zeroFill(int number)
-    {
-        if (number < 10) {
-            return "0" + number;
-        }
-
-        return "" + number;
-    }
-
-    /**
      * Gibt den Geldbetrag als formatierten String der Form "EE.CC" zurück
      * @return Der Geldbetrag als String
      */
@@ -148,13 +134,7 @@ public final class Geldbetrag
         int cent = _eurocent % 100;
         int euro = (_eurocent - cent) / 100;
 
-        // Zerofill Euro
-        String zeroFilledEuro = zeroFill(euro);
-
-        // Zerofill Cent
-        String zeroFilledCent = zeroFill(cent);
-
-        return zeroFilledEuro + "," + zeroFilledCent;
+        return String.format("%02d,%02d", euro, cent);
     }
 
     /**

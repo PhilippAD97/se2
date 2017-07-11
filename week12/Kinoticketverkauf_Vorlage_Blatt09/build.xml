@@ -5,9 +5,10 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="Kinoticketverkauf_Vorlage_Blatt09">
     <property environment="env"/>
+    <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
     <path id="JUnit 4.libraryclasspath">
         <pathelement location="../../../../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
         <pathelement location="../../../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
@@ -50,5 +51,45 @@
     <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
+    </target>
+    <target name="GeldbetragTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.fachwerte.GeldbetragTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Kinoticketverkauf_Vorlage_Blatt09.classpath"/>
+        </junit>
+    </target>
+    <target name="src (3)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.fachwerte.DatumTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.fachwerte.GeldbetragTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.fachwerte.PlatzTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.fachwerte.UhrzeitTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.materialien.FilmTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.materialien.KinoTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.materialien.KinosaalTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.materialien.TagesplanTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.materialien.VorstellungTest" todir="${junit.output.dir}"/>
+            <test name="de.uni_hamburg.informatik.swt.se2.kino.startup.AssertTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Kinoticketverkauf_Vorlage_Blatt09.classpath"/>
+        </junit>
+    </target>
+    <target name="StartupKinoticketverkauf (1)">
+        <java classname="de.uni_hamburg.informatik.swt.se2.kino.startup.StartupKinoticketverkauf" failonerror="true" fork="yes">
+            <classpath refid="Kinoticketverkauf_Vorlage_Blatt09.classpath"/>
+        </java>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
     </target>
 </project>
